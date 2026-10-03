@@ -1,0 +1,32 @@
+---
+title: "Healthcare Interoperability Lab (NutriTrack x HealthMap)"
+tagline: "An interoperable nutrition monitoring ecosystem synchronizing clinical data via FHIR-aligned REST APIs."
+date: "2025-06-15"
+role: "Backend & Systems Engineer"
+techStack: ["REST API", "PostgreSQL", "FHIR", "Docker", "Node.js"]
+featured: true
+status: "Completed / Active Lab"
+repoUrl: "https://github.com/prandika"
+demoUrl: ""
+---
+
+# Healthcare Interoperability Lab (NutriTrack x HealthMap)
+
+NutriTrack x HealthMap is an experimental healthcare interoperability project designed to bridge nutrition monitoring platforms and geographic health tracking systems through a shared standardized data pipeline.
+
+## Problem & Motivation
+
+Healthcare applications frequently store malnutrition metrics in isolated proprietary structures. Public health officers cannot cross-correlate nutritional deficiencies with regional demographics without manual data export and reconciliation.
+
+## Architecture
+
+The system coordinates two independent subsystems:
+- **NutriTrack Service:** Handles patient intake, anthropometric measurements (weight, height, age), and growth chart calculations.
+- **HealthMap Service:** Visualizes spatial distribution of nutritional status across health districts.
+- **Interoperability Gateway:** Transforms internal records into standardized FHIR-compliant payloads (`Patient` and `Observation` resources) for synchronization.
+
+## What Went Wrong & Debugging Stories
+
+During early integration testing, concurrent webhook syncs caused duplicate observation entries in the analytics store due to race conditions during network latency spikes.
+
+**Solution:** Implemented idempotency keys on every ingestion payload and structured transactional upsert logic in PostgreSQL, ensuring that retransmitted packets safely resolve without duplicated clinical observations.

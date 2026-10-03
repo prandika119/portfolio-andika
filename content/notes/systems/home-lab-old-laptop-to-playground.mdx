@@ -1,0 +1,27 @@
+---
+title: "Building My Home Lab: Turning an Old Laptop into an Engineering Playground"
+description: "How setting up Linux, Docker containers, reverse proxies, and local networking provided practical systems intuition beyond typical web tutorials."
+date: "2026-01-14"
+category: "systems"
+tags: ["Linux", "Docker", "Networking", "HomeLab", "Self-hosting"]
+featured: false
+status: "published"
+---
+
+# Building My Home Lab: Turning an Old Laptop into an Engineering Playground
+
+I believe that true backend engineering intuition comes from understanding what happens beneath the application runtime. To understand operating systems, networking, and daemon management, I repurposed an old idle laptop into a dedicated home Linux server.
+
+## Hardware & Operating System Setup
+
+- **Machine:** Lenovo ThinkPad (Intel Core i5, 8GB RAM, 256GB SSD)
+- **OS:** Ubuntu Server LTS (headless, no desktop environment)
+- **Power Management:** Configured `/etc/systemd/logind.conf` to ignore lid-close suspension so it acts as an always-on compact server.
+
+## Key Services Hosted
+
+1. **Docker Engine & Docker Compose:** Running containers for PostgreSQL, Redis, and local development services.
+2. **Reverse Proxy (Nginx / Caddy):** Managing internal hostnames like `*.lab.local` with local SSL certificates.
+3. **Tailscale VPN:** Securely accessing home lab services from anywhere without exposing public ports.
+
+Working with an actual Linux machine with physical network cables taught me more about DNS resolution, subnet routing, and port forwarding than dozens of online tutorials.

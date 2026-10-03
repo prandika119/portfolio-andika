@@ -1,0 +1,29 @@
+---
+title: "What I Learned Building a Local RAG Pipeline with FastAPI and Ollama"
+description: "Hands-on engineering lessons from building an enterprise Document Management System with local LLMs, vector search, and latency optimization."
+date: "2026-02-28"
+category: "ai"
+tags: ["RAG", "LLM", "FastAPI", "Ollama", "Python"]
+featured: true
+status: "published"
+---
+
+# What I Learned Building a Local RAG Pipeline with FastAPI and Ollama
+
+During my internship at PT Parama Data Unit, I was tasked with building an AI-powered document querying system using Retrieval-Augmented Generation (RAG).
+
+The primary constraint was data privacy: documents could not leave internal infrastructure, which meant using self-hosted, local LLMs via Ollama rather than public cloud APIs.
+
+## 1. Chunking Strategy Matters More than LLM Size
+
+In the beginning, we tested simple fixed-character chunking (e.g. every 500 characters). The model frequently hallucinated or missed context when answers spanned across section boundaries.
+
+Switching to recursive markdown/document header chunking with a 15% overlap immediately improved retrieval precision by preserving semantic paragraphs intact.
+
+## 2. Asynchronous Vector Search
+
+Querying dense vector embeddings synchronously created bottlenecks in the API gateway. By decoupling embedding generation and utilizing asynchronous FastAPI endpoints with background task processing, we cut client-facing response latency significantly.
+
+## Key Takeaway
+
+A successful RAG system is 80% data engineering (parsing, chunking, metadata filtering) and 20% model inference.
