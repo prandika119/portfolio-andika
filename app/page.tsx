@@ -1,355 +1,337 @@
-import React from "react";
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
-    Github,
-    Linkedin,
-    Mail,
-    Phone,
-    MapPin,
-    ExternalLink,
+  ArrowUpRight,
+  BriefcaseBusiness,
+  ChevronDown,
+  Menu,
+  MessageCircle,
+  MoveUpRight,
+  Sparkles,
+  X,
 } from "lucide-react";
+import { ProjectCard } from "./components/ProjectCard";
+import { SocialLinks } from "./components/SocialLinks";
+import { projects } from "./data/projects";
+
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Portfolio", href: "#portfolio" },
+  { label: "Contact", href: "#contact" },
+];
+
+const experience = [
+  {
+    date: "Feb — Jun 2026",
+    company: "PT Parama Data Unit",
+    role: "Full Stack Developer & AI Engineer Intern",
+    description:
+      "Developed an AI-powered document management system based on Retrieval-Augmented Generation (RAG) to support intelligent and automated document querying, while building a responsive Next.js interface and FastAPI-powered backend pipeline with Ollama integration.",
+  },
+  {
+    date: "Oct — Nov 2025",
+    company: "PT Jaya Perkasa Mandalika",
+    role: "Web Developer Intern",
+    description:
+      "Handled a multi-tenant SaaS platform using Laravel, supported centralized data management for multiple clients, and worked with the team to resolve frontend-backend integration issues and dynamic rendering problems through GitHub-based collaboration.",
+  },
+  {
+    date: "Jul 2022 — Dec 2023",
+    company: "Digital Hero Indonesia",
+    role: "Web Developer Intern",
+    description:
+      "Built a rental management web system using Laravel and contributed to Agile Scrum delivery, including sprint planning, daily standups, source control, and project coordination with Git and GitHub.",
+  },
+];
+
+const skillGroups = [
+  { label: "Languages", items: ["PHP", "Python", "Golang", "JavaScript", "TypeScript"] },
+  { label: "Frontend", items: ["React", "HTML", "CSS", "Tailwind", "Bootstrap"] },
+  { label: "Backend", items: ["Laravel", "NestJS", "FastAPI", "Express", "REST API"] },
+  { label: "Tools", items: ["Git", "GitHub", "Docker", "Linux", "n8n", "Postman"] },
+];
+
+const organizationExperience = [
+  {
+    title: "Media & IT Support Staff",
+    org: "Ramadhan Di Kampus (RDK) UGM 1445H",
+    date: "Mar 2024",
+    description:
+      "Managed live streaming setup using OBS Studio and handled technical troubleshooting for camera, audio, and lighting during daily Ramadan webinar sessions.",
+  },
+  {
+    title: "Creative Media Staff",
+    org: "Jamaah Shalahudin UGM",
+    date: "Oct 2023 — Mar 2024",
+    description:
+      "Produced and edited educational video content for organizational branding, while documenting activities and preserving visual archives.",
+  },
+  {
+    title: "Head of Media Division",
+    org: "SMANA Masuk Kampus 7.0 (Edu Fair)",
+    date: "Dec 2023",
+    description:
+      "Led the media team, coordinated design and social media production, and acted as the main liaison between divisions to keep event communication aligned.",
+  },
+];
 
 export default function Portfolio() {
-    const projects = [
-        {
-            title: "Website Sistem Informasi Masjid",
-            description:
-                "Website sistem informasi masjid menggunakan HTML, Bootstrap, library AOS, dan PHP dengan database MySQL",
-            tech: ["HTML", "CSS", "Bootstrap", "PHP", "MySQL"],
-            demo: "https://youtu.be/t14VIlV0wYs?si=JQGZkTOq9LQasabd",
-            github: "https://github.com/prandika119/WebSistemInformasiMasjid-ProjekUAS2",
-        },
-        {
-            title: "Website Sistem Penyewaan Lapangan",
-            description:
-                "Aplikasi untuk mengelola penyewaan lapangan olahraga dengan fitur autentikasi, jadwal, transaksi, pelaporan, dan booking online",
-            tech: ["Laravel", "PHP", "MySQL", "Laravel Blade"],
-            demo: "https://drive.google.com/file/d/1Kbz9B35wLJFrvTejY-BW8c5LI6cxaYky/view",
-            github: "https://github.com/luthfiabdllh/skyclub",
-            apiRepo: "https://github.com/prandika119/api-skyclub",
-        },
-        {
-            title: "Chatbot AI Telegram (N8N)",
-            description:
-                "Chatbot berbasis workflow engine yang menjawab pertanyaan terkait review hotel dari berbagai sumber data secara real-time menggunakan n8n, Supabase, Gemini API, dan Ollama",
-            tech: ["n8n", "Supabase", "Gemini API", "Ollama"],
-            demo: "https://t.me/RoboAI_AsistenHotelManager_bot",
-            github: "https://github.com/prandika119/roboai-chatbot-n8n",
-        },
-    ];
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showTop, setShowTop] = useState(false);
 
-    const experiences = [
-        {
-            period: "Oktober – November 2025",
-            title: "Magang Web Developer",
-            company: "PT Jaya Perkasa Mandalika",
-            duration: "2 Bulan",
-            responsibilities: [
-                "Membangun website sistem SaaS multitenant menggunakan Laravel",
-                "Mendinamiskan data di website",
-                "Berkolaborasi menggunakan Git dan GitHub",
-            ],
-        },
-        {
-            period: "Februari – April 2025",
-            title: "Magang Web Developer",
-            company: "Digital Hero Indonesia",
-            duration: "3 Bulan",
-            responsibilities: [
-                "Membangun website sistem penyewaan menggunakan Laravel",
-                "Mengembangkan proyek bersama tim dalam lingkungan kerja berbasis Agile Scrum",
-                "Berkolaborasi menggunakan Git dan GitHub",
-            ],
-        },
-        {
-            period: "Maret 2024",
-            title: "Staf Divisi Media Kreatif / Subdiv IT",
-            company: "Ramadhan Di Kampus / RDK 1445H",
-            duration: "1 Bulan",
-            responsibilities: [
-                "Menjalankan live streaming dengan perangkat lunak OBS untuk kajian Ramadhan",
-                "Mengatur kamera, audio, dan pencahayaan untuk keperluan live streaming",
-            ],
-        },
-        {
-            period: "Oktober 2023 – sekarang",
-            title: "Staff Media",
-            company: "Jamaah Shalahudin",
-            responsibilities: [
-                "Mengedit video pendek islami menggunakan software editing",
-                "Melakukan take video untuk keperluan konten",
-            ],
-        },
-    ];
+  useEffect(() => {
+    const revealNodes = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { threshold: 0.14 }
+    );
 
-    const skills = {
-        Backend: ["Laravel", "PHP", "Golang", "JavaScript"],
-        Frontend: ["HTML", "CSS", "Bootstrap", "Laravel Blade", "JavaScript"],
-        Database: ["MySQL", "Supabase (PostgreSQL)"],
-        "Tools & Others": [
-            "Git & GitHub",
-            "n8n",
-            "Docker (Basic)",
-            "CI/CD (Basic)",
-            "RESTful API",
-        ],
+    revealNodes.forEach((node) => observer.observe(node));
+
+    const handleScroll = () => setShowTop(window.scrollY > 520);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 820) {
+        setMenuOpen(false);
+      }
     };
 
-    return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header/Hero Section */}
-            <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-                <div className="container mx-auto px-6 max-w-5xl">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        Andika Dwi Prasetya
-                    </h1>
-                    <p className="text-xl md:text-2xl mb-6 text-blue-100">
-                        Web Developer | Backend Enthusiast
-                    </p>
-                    <p className="text-lg mb-8 max-w-3xl text-blue-50">
-                        Mahasiswa Vokasi Universitas Gadjah Mada, Program Studi
-                        Teknologi Rekayasa Perangkat Lunak. Berpengalaman dalam
-                        pengembangan aplikasi web dengan Laravel dan memiliki
-                        minat mendalam di backend development.
-                    </p>
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-                    {/* Contact Info */}
-                    <div className="flex flex-wrap gap-4 text-sm">
-                        <a
-                            href="mailto:andika.dwiprasetya119@gmail.com"
-                            className="flex items-center gap-2 hover:text-blue-200 transition"
-                        >
-                            <Mail size={18} />
-                            <span>andika.dwiprasetya119@gmail.com</span>
-                        </a>
-                        <a
-                            href="tel:+6289538498610"
-                            className="flex items-center gap-2 hover:text-blue-200 transition"
-                        >
-                            <Phone size={18} />
-                            <span>+62 895-3849-86610</span>
-                        </a>
-                        <div className="flex items-center gap-2">
-                            <MapPin size={18} />
-                            <span>Sleman, Yogyakarta</span>
-                        </div>
-                    </div>
+  return (
+    <main className="page-shell">
+      <nav className="nav-shell">
+        <a className="brand" href="#top" onClick={() => setMenuOpen(false)}>
+          ADP<span>.</span>
+        </a>
 
-                    {/* Social Links */}
-                    <div className="flex gap-4 mt-6">
-                        <a
-                            href="https://github.com/prandika119"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 bg-white text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
-                        >
-                            <Github size={20} />
-                            <span>GitHub</span>
-                        </a>
-                        <a
-                            href="https://www.linkedin.com/in/andika-dwi-prasetya-3a529b299"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 bg-white text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
-                        >
-                            <Linkedin size={20} />
-                            <span>LinkedIn</span>
-                        </a>
-                    </div>
-                </div>
-            </header>
+        <button
+          className="menu-toggle"
+          aria-label="Toggle navigation menu"
+          onClick={() => setMenuOpen((prev) => !prev)}
+        >
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
 
-            {/* Main Content */}
-            <main className="container mx-auto px-6 max-w-5xl py-12">
-                {/* Education Section */}
-                <section className="mb-16">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">
-                        Pendidikan
-                    </h2>
-                    <div className="space-y-4">
-                        <div className="bg-white p-6 rounded-lg shadow-sm">
-                            <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-xl font-semibold text-gray-800">
-                                    Sekolah Vokasi, Universitas Gadjah Mada
-                                </h3>
-                                <span className="text-sm text-gray-600">
-                                    2023 – sekarang
-                                </span>
-                            </div>
-                            <p className="text-gray-700">
-                                Program Studi Teknologi Rekayasa Perangkat Lunak
-                            </p>
-                            <p className="text-sm text-gray-600 mt-1">
-                                Semester 5 | Yogyakarta, Indonesia
-                            </p>
-                        </div>
-                        <div className="bg-white p-6 rounded-lg shadow-sm">
-                            <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-xl font-semibold text-gray-800">
-                                    SMA NEGERI 1 Ajibarang
-                                </h3>
-                                <span className="text-sm text-gray-600">
-                                    2020 – 2023
-                                </span>
-                            </div>
-                            <p className="text-gray-700">
-                                Jurusan Matematika dan Ilmu Pengetahuan Alam
-                                (MIPA)
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Experience Section */}
-                <section className="mb-16">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">
-                        Pengalaman Profesional
-                    </h2>
-                    <div className="space-y-6">
-                        {experiences.map((exp, idx) => (
-                            <div
-                                key={idx}
-                                className="bg-white p-6 rounded-lg shadow-sm"
-                            >
-                                <div className="flex justify-between items-start mb-2">
-                                    <div>
-                                        <h3 className="text-xl font-semibold text-gray-800">
-                                            {exp.title}
-                                        </h3>
-                                        <p className="text-blue-600 font-medium">
-                                            {exp.company}
-                                        </p>
-                                    </div>
-                                    <div className="text-right">
-                                        <span className="text-sm text-gray-600">
-                                            {exp.period}
-                                        </span>
-                                        {exp.duration && (
-                                            <p className="text-sm text-gray-500">
-                                                ({exp.duration})
-                                            </p>
-                                        )}
-                                    </div>
-                                </div>
-                                <ul className="list-disc list-inside space-y-1 text-gray-700 mt-3">
-                                    {exp.responsibilities.map((resp, i) => (
-                                        <li key={i}>{resp}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Projects Section */}
-                <section className="mb-16">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">
-                        Proyek
-                    </h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {projects.map((project, idx) => (
-                            <div
-                                key={idx}
-                                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition"
-                            >
-                                <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                                    {project.title}
-                                </h3>
-                                <p className="text-gray-700 mb-4 text-sm">
-                                    {project.description}
-                                </p>
-
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {project.tech.map((tech, i) => (
-                                        <span
-                                            key={i}
-                                            className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium"
-                                        >
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <div className="flex gap-3 text-sm">
-                                    {project.demo && (
-                                        <a
-                                            href={project.demo}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition"
-                                        >
-                                            <ExternalLink size={16} />
-                                            <span>Demo</span>
-                                        </a>
-                                    )}
-                                    {project.github && (
-                                        <a
-                                            href={project.github}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-1 text-gray-700 hover:text-gray-900 transition"
-                                        >
-                                            <Github size={16} />
-                                            <span>GitHub</span>
-                                        </a>
-                                    )}
-                                    {project.apiRepo && (
-                                        <a
-                                            href={project.apiRepo}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-1 text-gray-700 hover:text-gray-900 transition"
-                                        >
-                                            <Github size={16} />
-                                            <span>API Repo</span>
-                                        </a>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Skills Section */}
-                <section className="mb-16">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">
-                        Keahlian
-                    </h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {Object.entries(skills).map(([category, skillList]) => (
-                            <div
-                                key={category}
-                                className="bg-white p-6 rounded-lg shadow-sm"
-                            >
-                                <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                                    {category}
-                                </h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {skillList.map((skill, i) => (
-                                        <span
-                                            key={i}
-                                            className="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm"
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            </main>
-
-            {/* Footer */}
-            <footer className="bg-gray-800 text-white py-8">
-                <div className="container mx-auto px-6 max-w-5xl text-center">
-                    <p className="text-gray-300">
-                        © 2025 Andika Dwi Prasetya. All rights reserved.
-                    </p>
-                    <p className="text-sm text-gray-400 mt-2">
-                        Built with Next.js & Tailwind CSS
-                    </p>
-                </div>
-            </footer>
+        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+          {navItems.map((item) => (
+            <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
+              {item.label}
+            </a>
+          ))}
+          <a className="nav-cta" href="mailto:andika.dwiprasetya119@gmail.com" onClick={() => setMenuOpen(false)}>
+            Let&apos;s talk <ArrowUpRight size={15} />
+          </a>
         </div>
-    );
+      </nav>
+
+      <header className="hero section-wrap" id="top">
+        <div className="hero-copy reveal">
+          <p className="eyebrow">
+            <span className="status-dot" /> Available for collaboration
+          </p>
+          <h1>
+            Building digital <em>experiences</em> with purpose.
+          </h1>
+          <p className="hero-intro">
+            I&apos;m Andika Dwi Prasetya, a Software Engineering Technology student passionate about building reliable web products,
+            efficient backend systems, and user-focused experiences from idea to implementation.
+          </p>
+
+          <div className="hero-actions">
+            <a className="button button-primary" href="#portfolio">
+              Explore my work <ArrowUpRight size={17} />
+            </a>
+            <a className="text-link" href="mailto:andika.dwiprasetya119@gmail.com">
+              Get in touch <MoveUpRight size={16} />
+            </a>
+          </div>
+          <SocialLinks />
+        </div>
+
+        <div className="hero-visual reveal delay-2">
+          <div className="hero-image-frame rounded-3xl">
+            <Image src="/my_photo/foto%20ku.jpg" alt="Andika Dwi Prasetya portrait" fill sizes="(max-width: 820px) 100vw, 470px" priority />
+            <div className="image-caption">01 / Profile study</div>
+          </div>
+          <div className="hero-stamp">
+            <Sparkles size={18} />
+            <span>
+              CURIOUS
+              <br />
+              BY DEFAULT
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <div className="marquee-band" aria-label="Key expertise">
+        <div>
+          FULL STACK DEVELOPMENT <span>✦</span> AI ENGINEERING <span>✦</span> BACKEND SYSTEMS <span>✦</span> CREATIVE MEDIA
+          <span>✦</span>
+        </div>
+      </div>
+
+      <section className="content-section section-wrap" id="about">
+        <div className="section-label reveal">
+          <span>01</span>
+          <span>About me</span>
+        </div>
+
+        <div className="about-grid">
+          <div className="about-heading reveal">
+            <h2>
+              Good software <em>starts with</em> sharp thinking.
+            </h2>
+          </div>
+
+          <div className="about-copy reveal delay-1">
+            <p>
+              My interest in software began with understanding how digital systems work behind the scenes and how thoughtful design can
+              solve practical problems. That curiosity has grown into a focus on web development, backend engineering, and AI-assisted
+              product building.
+            </p>
+            <p>
+              As a Software Engineering Technology student at Universitas Gadjah Mada, I enjoy working across the stack: designing data
+              flows, building APIs, developing interfaces, and collaborating with teams to turn ideas into dependable products.
+            </p>
+            <div className="signature">
+              ADP<span>—</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="content-section section-wrap" id="experience">
+        <div className="section-label reveal">
+          <span>02</span>
+          <span>Experience</span>
+        </div>
+
+        <div className="experience-list">
+          {experience.map((item, index) => (
+            <article className="experience-item reveal" style={{ transitionDelay: `${index * 0.12}s` }} key={item.company}>
+              <div className="experience-date">{item.date}</div>
+              <div className="experience-copy">
+                <p className="company-name">{item.company}</p>
+                <h3>{item.role}</h3>
+                <p className="muted-copy">{item.description}</p>
+              </div>
+              <ArrowUpRight className="item-arrow" size={19} />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="portfolio-section" id="portfolio">
+        <div className="section-wrap">
+          <div className="section-label reveal">
+            <span>03</span>
+            <span>Portfolio</span>
+          </div>
+
+          <div className="projects-intro reveal">
+            <h2>
+              A few things <em>I&apos;ve built.</em>
+            </h2>
+            <p>Solutions shaped by usability, maintainability, and a strong sense of product purpose.</p>
+          </div>
+
+          <div className="project-list">
+            {projects.map((project, index) => (
+              <ProjectCard project={project} index={index} key={project.title} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="content-section section-wrap" id="skills">
+        <div className="section-label reveal">
+          <span>04</span>
+          <span>Toolkit</span>
+        </div>
+
+        <div className="skills-grid">
+          {skillGroups.map((group, index) => (
+            <div className="skill-group reveal" style={{ transitionDelay: `${index * 0.08}s` }} key={group.label}>
+              <span className="skill-index">0{index + 1}</span>
+              <h3>{group.label}</h3>
+              <div>
+                {group.items.map((skill) => (
+                  <span key={skill}>{skill}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="content-section section-wrap" id="community">
+        <div className="section-label reveal">
+          <span>05</span>
+          <span>Leadership</span>
+        </div>
+
+        <div className="org-list">
+          {organizationExperience.map((item, index) => (
+            <article className="org-item reveal" style={{ transitionDelay: `${index * 0.1}s` }} key={item.title}>
+              <div className="org-meta">
+                <BriefcaseBusiness size={16} />
+                <span>{item.date}</span>
+              </div>
+              <div className="org-copy">
+                <p className="org-role">{item.title}</p>
+                <h3>{item.org}</h3>
+                <p>{item.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="contact-section section-wrap reveal" id="contact">
+        <div className="contact-kicker">
+          <MessageCircle size={17} /> Have a project in mind?
+        </div>
+        <h2>
+          Let&apos;s make something <em>worth remembering.</em>
+        </h2>
+        <a className="contact-email" href="mailto:andika.dwiprasetya119@gmail.com">
+          andika.dwiprasetya119@gmail.com <ArrowUpRight size={22} />
+        </a>
+      </section>
+
+      <footer className="footer section-wrap">
+        <span>© 2026 Andika Dwi Prasetya</span>
+        <span>Designed & built with care</span>
+        <SocialLinks compact />
+      </footer>
+
+      {showTop && (
+        <button className="back-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top">
+          <ChevronDown size={18} />
+        </button>
+      )}
+
+    </main>
+  );
 }
