@@ -30,7 +30,7 @@ export function NotesFilter({ initialNotes, categories }: NotesFilterProps) {
               : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 hover:text-zinc-900"
           }`}
         >
-          All ({initialNotes.length})
+          Semua ({initialNotes.length})
         </button>
 
         {categories.map((cat) => (
@@ -61,17 +61,17 @@ export function NotesFilter({ initialNotes, categories }: NotesFilterProps) {
             <BookOpen size={24} />
           </div>
           <div className="text-sm font-semibold text-zinc-800">
-            No notes in this category yet
+            Belum ada catatan pada kategori ini
           </div>
           <p className="text-xs text-zinc-500 max-w-sm mx-auto">
-            Articles in this category are currently in the research or draft phase.
-            Check back soon for new deep-dives!
+            Artikel pada topik ini sedang dalam tahap riset eksperimen atau
+            penulisan draf. Kunjungi kembali dalam beberapa waktu!
           </p>
           <button
             onClick={() => setSelectedCategory("all")}
             className="text-xs font-mono text-zinc-700 underline hover:text-zinc-900 pt-1"
           >
-            ← View all notes
+            ← Lihat semua catatan
           </button>
         </div>
       )}

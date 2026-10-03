@@ -24,21 +24,22 @@ export default function HomePage() {
       <section className="space-y-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono text-zinc-600 bg-zinc-100 rounded-full border border-zinc-200">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-subtle"></span>
-          <span>Available for engineering roles & collaboration</span>
+          <span>Tersedia untuk peran engineering & kolaborasi teknis</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.15]">
-          Software Engineer exploring{" "}
+          Software Engineer yang mendalami{" "}
           <span className="text-zinc-500 font-normal">
-            healthcare interoperability, AI systems, and infrastructure.
+            interoperabilitas data kesehatan, sistem AI, dan infrastruktur backend.
           </span>
         </h1>
 
         <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-2xl">
-          I&apos;m Andika Dwi Prasetya, a Software Engineering Technology student at
-          Universitas Gadjah Mada. I document what I build, what I break, and what
-          I learn—from HL7 FHIR and SATUSEHAT APIs to local RAG pipelines and home
-          server infrastructure.
+          Saya Andika Dwi Prasetya, mahasiswa Teknologi Rekayasa Perangkat Lunak
+          di Universitas Gadjah Mada. Saya mendokumentasikan apa yang saya bangun,
+          apa yang saya pelajari, dan bagaimana saya memecahkan masalah—mulai dari
+          standar HL7 FHIR dan API SATUSEHAT hingga pipeline RAG lokal dan server
+          Linux mandiri.
         </p>
 
         {/* Action CTAs */}
@@ -48,21 +49,21 @@ export default function HomePage() {
             className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shadow-sm"
           >
             <FolderGit2 size={16} />
-            Explore Work
+            Eksplorasi Karya
           </Link>
           <Link
             href="/notes"
             className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 hover:text-zinc-900 rounded-lg border border-zinc-200 transition-colors"
           >
             <BookOpen size={16} />
-            Read Notes
+            Baca Catatan
           </Link>
           <Link
             href="/resume"
             className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 hover:text-zinc-900 rounded-lg border border-zinc-200 transition-colors"
           >
             <FileText size={16} />
-            Resume
+            Lihat Resume
           </Link>
         </div>
       </section>
@@ -70,7 +71,7 @@ export default function HomePage() {
       {/* 2. Current Focus Grid */}
       <section className="space-y-4">
         <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-          Current Focus & Exploration
+          Fokus & Eksplorasi Saat Ini
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -83,8 +84,8 @@ export default function HomePage() {
               Healthcare IT
             </div>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              HL7 FHIR standards, SATUSEHAT sandbox integrations, clinical data
-              pipelines, and healthcare interoperability.
+              Standar HL7 FHIR, integrasi sandbox SATUSEHAT Kemenkes, pipeline
+              data klinis, dan interoperabilitas faskes.
             </p>
             <div className="flex flex-wrap gap-1.5 pt-1">
               {["HL7 FHIR", "SATUSEHAT", "REST API", "PostgreSQL"].map((tag) => (
@@ -104,11 +105,11 @@ export default function HomePage() {
               <div className="p-2 rounded-lg bg-blue-50 text-blue-700 border border-blue-200/60">
                 <Sparkles size={16} />
               </div>
-              AI & RAG Systems
+              AI & Sistem RAG
             </div>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Retrieval-Augmented Generation, local LLM orchestration via Ollama,
-              FastAPI pipelines, and retrieval evaluation.
+              Retrieval-Augmented Generation, orkestrasi LLM lokal via Ollama,
+              pipeline FastAPI, dan evaluasi presisi retrieval.
             </p>
             <div className="flex flex-wrap gap-1.5 pt-1">
               {["RAG", "FastAPI", "Ollama", "Vector DB"].map((tag) => (
@@ -128,11 +129,11 @@ export default function HomePage() {
               <div className="p-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200/60">
                 <Cpu size={16} />
               </div>
-              Systems & Infra
+              Sistem & Infrastruktur
             </div>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Linux administration, Docker containerization, home lab self-hosting,
-              reverse proxies, and networking.
+              Administrasi Linux headless, kontainerisasi Docker, self-hosting
+              home lab, reverse proxy, dan VPN mesh.
             </p>
             <div className="flex flex-wrap gap-1.5 pt-1">
               {["Linux", "Docker", "Tailscale", "HomeLab"].map((tag) => (
@@ -153,17 +154,17 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-zinc-900">
-              Featured Work
+              Karya & Proyek Unggulan
             </h2>
             <p className="text-xs text-zinc-500 mt-1">
-              Flagship engineering implementations and case studies.
+              Implementasi rekayasa perangkat lunak dan studi kasus nyata.
             </p>
           </div>
           <Link
             href="/work"
             className="inline-flex items-center gap-1 text-xs font-mono text-zinc-600 hover:text-zinc-900 transition-colors"
           >
-            All projects <ArrowRight size={13} />
+            Semua proyek <ArrowRight size={13} />
           </Link>
         </div>
 
@@ -212,7 +213,7 @@ export default function HomePage() {
                     href={`/projects/${project.slug}`}
                     className="inline-flex items-center gap-1 text-xs font-medium text-zinc-900 group-hover:translate-x-0.5 transition-transform"
                   >
-                    View case study <ArrowUpRight size={14} />
+                    Baca studi kasus <ArrowUpRight size={14} />
                   </Link>
                 </div>
               </div>
@@ -226,17 +227,17 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-zinc-900">
-              Latest Notes
+              Catatan Teknis Terbaru
             </h2>
             <p className="text-xs text-zinc-500 mt-1">
-              Reflections, debugging logs, and deep-dives written from experience.
+              Refleksi, log pemecahan masalah, dan deep-dive dari pengalaman langsung.
             </p>
           </div>
           <Link
             href="/notes"
             className="inline-flex items-center gap-1 text-xs font-mono text-zinc-600 hover:text-zinc-900 transition-colors"
           >
-            All notes <ArrowRight size={13} />
+            Semua catatan <ArrowRight size={13} />
           </Link>
         </div>
 
@@ -273,7 +274,7 @@ export default function HomePage() {
                   href={`/notes/${note.category}/${note.slug}`}
                   className="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 group-hover:text-zinc-900 transition-colors"
                 >
-                  Read note <ArrowRight size={13} />
+                  Baca artikel <ArrowRight size={13} />
                 </Link>
               </div>
             </article>
@@ -286,17 +287,17 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold tracking-tight text-zinc-900">
-              Professional Experience
+              Pengalaman Profesional
             </h2>
             <p className="text-xs text-zinc-500 mt-1">
-              Roles and technical contributions in production teams.
+              Peran dan kontribusi teknis pada tim produksi.
             </p>
           </div>
           <Link
             href="/work"
             className="inline-flex items-center gap-1 text-xs font-mono text-zinc-600 hover:text-zinc-900 transition-colors"
           >
-            Full timeline <ArrowRight size={13} />
+            Linimasa lengkap <ArrowRight size={13} />
           </Link>
         </div>
 
@@ -342,11 +343,11 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1.5 max-w-lg">
             <h2 className="text-lg sm:text-xl font-bold text-zinc-900">
-              Let&apos;s build something meaningful together.
+              Mari berdiskusi dan membangun sesuatu yang bermanfaat.
             </h2>
             <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-              Open to conversations about healthcare technology, backend systems,
-              local RAG pipelines, or full-time / internship opportunities.
+              Terbuka untuk diskusi seputar teknologi kesehatan, sistem backend,
+              pipeline RAG lokal, maupun peluang kerja dan kolaborasi rekayasa.
             </p>
           </div>
 
@@ -356,7 +357,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shadow-xs"
             >
               <Mail size={14} />
-              Send Email
+              Kirim Email
             </a>
             <a
               href="https://linkedin.com/in/andika-dwi-prasetya-3a529b299"

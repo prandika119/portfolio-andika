@@ -1,20 +1,83 @@
 ---
-title: "Sports Field Rental Management System"
-tagline: "Relational database-driven booking engine and availability management system for athletic facilities."
+title: "Sistem Manajemen & Reservasi Fasilitas Olahraga"
+tagline: "Platform booking lapangan olahraga berbasis normalisasi basis data relasional dan resolusi konflik jadwal otomatis."
 date: "2024-12-10"
 role: "Full Stack Developer"
 techStack: ["Laravel", "PHP", "MySQL", "Tailwind CSS", "Alpine JS"]
 featured: false
-status: "Completed"
+status: "Selesai / Produksi"
 repoUrl: "https://github.com/luthfiabdllh/skyclub"
 demoUrl: ""
 ---
 
-# Sports Field Rental Management System
+# Sistem Manajemen & Reservasi Fasilitas Olahraga
 
-A web-based booking platform that streamlines court reservation management, schedule tracking, and operational payment confirmation for multi-court athletic venues.
+Aplikasi web manajemen pemesanan fasilitas olahraga yang dibangun untuk menyelesaikan permasalahan operasional reservasi multi-venue (seperti lapangan futsal, badminton, dan basket) yang sebelumnya dilakukan melalui pencatatan manual via chat dan buku agenda fisik.
 
-## Engineering Highlights
+---
 
-- **Relational Schema Design:** Designed an optimized MySQL schema with composite constraints to prevent schedule collisions.
-- **Transactional Booking:** Atomic transaction operations ensuring field slots are locked while payment validation is in transit.
+## 1. Permasalahan Utama yang Diselesaikan
+
+1. **Konflik Jadwal (Double-Booking):** Dua pelanggan sering memesan jam yang sama di lapangan yang sama karena lambatnya konfirmasi manual admin.
+2. **Rekapitulasi Keuangan yang Rentan Selisih:** Manajemen kesulitan melacak status uang muka (DP), pelunasan sewa, dan riwayat pembatalan jadwal.
+3. **Visibilitas Ketersediaan Lapangan:** Pelanggan tidak memiliki cara mandiri untuk melihat jam kosong tanpa harus bertanya satu per satu kepada pengelola.
+
+---
+
+## 2. Arsitektur Basis Data & Pencegahan Konflik
+
+Kunci keberhasilan sistem ini terletak pada perancangan skema database MySQL dengan normalisasi tingkat ketiga (3NF) dan integritas transaksi:
+
+```text
+┌───────────────────────┐          ┌────────────────────────┐
+│        Venues         │          │     Field_Courts       │
+│ (ID, Name, Location)  │ 1──────* │ (ID, Venue_ID, Type)   │
+└───────────────────────┘          └───────────┬────────────┘
+                                               │ 1
+                                               │
+                                               ▼ *
+┌───────────────────────┐          ┌────────────────────────┐
+│         Users         │ 1      * │      Reservations      │
+│ (ID, Name, Phone, Role│ ──────── │ (ID, Court_ID, Slot_ID,│
+└───────────────────────┘          │  Status, Booking_Date) │
+                                   └───────────┬────────────┘
+                                               │ *
+                                               ▼ 1
+                                   ┌────────────────────────┐
+                                   │      Time_Slots        │
+                                   │ (ID, Start_Time, End)  │
+                                   └────────────────────────┘
+```
+
+### Mekanisme Penguncian Jadwal (Transactional Lock):
+Untuk mencegah dua pengguna memesan slot yang sama pada milidetik yang berdekatan, proses checkout dibungkus dalam transaksi database dengan composite unique constraint:
+
+```sql
+ALTER TABLE reservations 
+ADD CONSTRAINT unique_court_schedule 
+UNIQUE (field_court_id, booking_date, time_slot_id);
+```
+
+Sebelum reservasi disimpan, aplikasi menjalankan query locking sementara:
+```php
+DB::transaction(function () use ($courtId, $date, $slotId, $userId) {
+    $existing = Reservation::where('field_court_id', $courtId)
+        ->where('booking_date', $date)
+        ->where('time_slot_id', $slotId)
+        ->lockForUpdate()
+        ->first();
+
+    if ($existing) {
+        throw new ScheduleCollisionException("Slot jadwal ini baru saja diambil pengguna lain.");
+    }
+
+    return Reservation::create([...]);
+});
+```
+
+---
+
+## 3. Hasil & Pembelajaran Rekayasa
+
+* **Nol Tabrakan Jadwal:** Penerapan integritas database dan *pessimistic lock* sepenuhnya mengeliminasi kasus booking ganda.
+* **Pembelajaran:** Memahami bahwa validasi frontend hanyalah kenyamanan antarmuka (*user experience*), sedangkan pertahanan kebenaran data mutlak harus ditegakkan di layer skema database relasional.

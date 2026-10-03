@@ -17,13 +17,13 @@ const NOTES_PATH = path.join(process.cwd(), "content/notes");
 const PROJECTS_PATH = path.join(process.cwd(), "content/projects");
 
 const CATEGORY_NAMES: Record<NoteCategory, string> = {
-  healthcare: "Healthcare",
+  healthcare: "Healthcare IT",
   ai: "AI & ML",
-  backend: "Backend",
-  systems: "Systems & Linux",
-  networking: "Networking",
+  backend: "Sistem Backend",
+  systems: "Sistem & Linux",
+  networking: "Jaringan Komputer",
   iot: "IoT & Embedded",
-  general: "General",
+  general: "Umum",
 };
 
 /**

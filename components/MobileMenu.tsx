@@ -11,10 +11,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Work", href: "/work" },
-  { label: "Notes", href: "/notes" },
-  { label: "About", href: "/about" },
+  { label: "Beranda", href: "/" },
+  { label: "Karya", href: "/work" },
+  { label: "Catatan", href: "/notes" },
+  { label: "Tentang", href: "/about" },
   { label: "Resume", href: "/resume" },
 ];
 
@@ -45,7 +45,7 @@ export function MobileMenu() {
     <div className="md:hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-label={isOpen ? "Tutup menu" : "Buka menu"}
         aria-expanded={isOpen}
         className="p-2 text-zinc-600 hover:text-zinc-900 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-400 transition-colors"
       >
@@ -80,7 +80,7 @@ export function MobileMenu() {
 
           <div className="pt-6 border-t border-zinc-200 flex flex-col gap-4">
             <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-              Connect
+              Kontak & Tautan
             </div>
             <div className="flex items-center gap-4">
               <a
@@ -119,7 +119,7 @@ export function MobileMenu() {
                 className="inline-flex items-center gap-1.5 ml-auto text-xs font-mono text-zinc-700 bg-zinc-100 hover:bg-zinc-200 px-3 py-1.5 rounded-md transition-colors"
               >
                 <FileText size={14} />
-                PDF CV
+                Unduh CV
               </a>
             </div>
           </div>

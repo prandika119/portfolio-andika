@@ -16,31 +16,31 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Me",
+  title: "Tentang Saya",
   description:
-    "Background, technical focus, and engineering journey of Andika Dwi Prasetya, Software Engineering student at Universitas Gadjah Mada.",
+    "Latar belakang, fokus teknis, dan perjalanan rekayasa perangkat lunak Andika Dwi Prasetya, mahasiswa TRPL Universitas Gadjah Mada.",
 };
 
 const techArsenal = [
   {
-    category: "Languages",
+    category: "Bahasa Pemrograman",
     icon: Code2,
     items: ["Python", "TypeScript", "JavaScript", "PHP", "Go", "SQL"],
   },
   {
-    category: "Backend & Frameworks",
+    category: "Backend & Framework",
     icon: Terminal,
-    items: ["FastAPI", "Next.js", "Express.js", "Laravel", "REST APIs", "Node.js"],
+    items: ["FastAPI", "Next.js", "Express.js", "Laravel", "REST API", "Node.js"],
   },
   {
-    category: "AI & Data Engineering",
+    category: "AI & Rekayasa Data",
     icon: Sparkles,
-    items: ["RAG Pipelines", "Ollama (Local LLMs)", "Vector DB", "PostgreSQL", "MySQL"],
+    items: ["Pipeline RAG", "Ollama (LLM Lokal)", "Vector DB", "PostgreSQL", "MySQL"],
   },
   {
-    category: "Tools & Infrastructure",
+    category: "Alat & Infrastruktur",
     icon: Cpu,
-    items: ["Linux", "Docker", "Git / GitHub", "Tailscale", "Nginx", "Postman"],
+    items: ["Linux (Ubuntu)", "Docker", "Git / GitHub", "Tailscale VPN", "Nginx", "Postman"],
   },
 ];
 
@@ -49,27 +49,27 @@ const currentExploration = [
     domain: "Healthcare IT",
     icon: Network,
     topics: [
-      "HL7 FHIR Standards (Patient, Observation, Encounter)",
-      "SATUSEHAT Sandbox API Integration & OAuth2",
-      "SIMRS / RME Clinical Data Mapping & Interoperability",
+      "Standar HL7 FHIR (Patient, Observation, Encounter)",
+      "Integrasi Sandbox API SATUSEHAT & Autentikasi OAuth2",
+      "Pemetaan Data Klinis RME / SIMRS & Interoperabilitas",
     ],
   },
   {
-    domain: "AI & RAG Systems",
+    domain: "Sistem AI & RAG",
     icon: Sparkles,
     topics: [
       "Semantic Document Chunking & Hybrid Retrieval",
-      "Local LLM Inference Optimization via Ollama",
-      "Hallucination Reduction & Source Citation Tracking",
+      "Optimasi Inferensi LLM Lokal dengan Ollama",
+      "Mitigasi Halusinasi & Pelacakan Sitasi Sumber Dokumen",
     ],
   },
   {
-    domain: "Systems & Infrastructure",
+    domain: "Sistem & Infrastruktur",
     icon: Cpu,
     topics: [
-      "Headless Ubuntu Server Administration",
-      "Secure Mesh Networking with Tailscale VPN",
-      "Self-Hosted Development Services & Reverse Proxies",
+      "Administrasi Server Headless Linux Ubuntu",
+      "Jaringan Mesh Aman Menggunakan Tailscale VPN",
+      "Layanan Pengembangan Self-Hosted & Reverse Proxy",
     ],
   },
 ];
@@ -80,14 +80,13 @@ export default function AboutPage() {
       {/* 1. Page Header */}
       <section className="space-y-3">
         <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-          {"// Profile & Engineering Journey"}
+          {"// Profil & Perjalanan Rekayasa"}
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
-          About Me
+          Tentang Saya
         </h1>
         <p className="text-base text-zinc-600 leading-relaxed max-w-2xl">
-          Software engineering student building resilient web backends, local AI
-          systems, and exploring healthcare data interoperability.
+          Mahasiswa teknologi rekayasa perangkat lunak yang berfokus membangun backend web yang tangguh, sistem AI lokal, dan mengeksplorasi interoperabilitas data kesehatan.
         </p>
       </section>
 
@@ -109,14 +108,14 @@ export default function AboutPage() {
           <div className="p-4 rounded-xl border border-zinc-200 bg-white space-y-2 text-xs">
             <div className="flex items-center gap-2 text-zinc-700">
               <MapPin size={14} className="text-zinc-400" />
-              <span>Sleman, Yogyakarta, Indonesia</span>
+              <span>Sleman, D.I. Yogyakarta, Indonesia</span>
             </div>
             <div className="flex items-center gap-2 text-zinc-700">
               <GraduationCap size={14} className="text-zinc-400" />
               <span>Universitas Gadjah Mada</span>
             </div>
             <div className="pt-2 border-t border-zinc-100 text-[11px] font-mono text-zinc-500">
-              GPA: 3.81 / 4.00 · Semester 5
+              IPK: 3.81 / 4.00 · Semester 5
             </div>
           </div>
         </div>
@@ -124,40 +123,40 @@ export default function AboutPage() {
         {/* Narrative */}
         <div className="md:col-span-8 space-y-5 text-sm text-zinc-700 leading-relaxed">
           <p>
-            Hello! I&apos;m <strong>Andika Dwi Prasetya</strong>, currently pursuing a
-            Bachelor of Applied Science in Software Engineering Technology at the
-            Vocational College, <strong>Universitas Gadjah Mada (UGM)</strong>.
+            Halo! Saya <strong>Andika Dwi Prasetya</strong>, saat ini sedang menempuh studi
+            Sarjana Terapan di Departemen Teknik Elektro dan Informatika, Program Studi
+            Teknologi Rekayasa Perangkat Lunak (TRPL), Sekolah Vokasi, <strong>Universitas Gadjah Mada (UGM)</strong>.
           </p>
 
           <p>
-            My engineering journey began with web development using Laravel and modern
-            JavaScript. Over time, I grew fascinated by the invisible systems beneath
-            user interfaces: database normalization, distributed background queues,
-            and API performance.
+            Perjalanan rekayasa saya dimulai dari pengembangan aplikasi web dengan Laravel
+            dan ekosistem JavaScript. Seiring waktu, rasa ingin tahu saya berkembang ke
+            sistem di balik layar yang menopang antarmuka: normalisasi skema database,
+            antrean proses asinkron, serta performa dan keandalan kontrak API.
           </p>
 
           <p>
-            During my internship at <strong>PT Parama Data Unit</strong> as a Full
-            Stack & AI Engineer Intern, I built an enterprise Document Management
-            System powered by a local Retrieval-Augmented Generation (RAG) pipeline
-            using FastAPI, Next.js, and Ollama. This experience showed me that
-            effective AI engineering is fundamentally about data precision and clean
-            architectural pipelines.
+            Selama magang di <strong>PT Parama Data Unit</strong> sebagai Full Stack Developer &
+            AI Engineer Intern, saya merancang dan membangun Document Management System
+            berbasis AI dengan pipeline Retrieval-Augmented Generation (RAG) lokal menggunakan
+            FastAPI, Next.js, dan Ollama. Pengalaman langsung ini membuktikan bahwa
+            efektivitas rekayasa AI bertumpu pada ketelitian pemrosesan dokumen dan desain
+            pipeline yang kokoh, bukan hanya bergantung pada ukuran model bahasa.
           </p>
 
           <p>
-            Currently, I am directing my technical depth toward{" "}
-            <strong>Healthcare IT and Interoperability</strong>. With Indonesia&apos;s
-            transition toward the <strong>SATUSEHAT</strong> national health data
-            ecosystem, there is an urgent need for software systems that can translate
-            heterogeneous clinical records into standardized{" "}
-            <strong>HL7 FHIR</strong> resources reliably and securely.
+            Saat ini, saya memfokuskan energi riset dan eksplorasi teknis pada bidang{" "}
+            <strong>Teknologi Informasi Kesehatan dan Interoperabilitas Data</strong>.
+            Seiring akselerasi ekosistem data kesehatan nasional <strong>SATUSEHAT</strong>{" "}
+            oleh Kementerian Kesehatan RI, kemampuan membangun jembatan data klinis yang
+            terstandarisasi dengan spesifikasi global <strong>HL7 FHIR</strong> menjadi
+            fondasi krusial bagi sistem kesehatan modern.
           </p>
 
           <blockquote className="p-4 rounded-lg border-l-2 border-zinc-900 bg-zinc-100/70 text-zinc-800 italic text-xs leading-relaxed">
-            &ldquo;Show the work, explain the thinking, and document the journey.
-            Technology should serve concrete human needs with transparency and
-            reliability.&rdquo;
+            &ldquo;Tunjukkan hasilnya, jelaskan cara berpikir di baliknya, dan dokumentasikan
+            prosesnya secara terbuka. Teknologi seharusnya menjawab masalah riil manusia
+            dengan transparan, aman, dan andal.&rdquo;
           </blockquote>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -166,7 +165,7 @@ export default function AboutPage() {
               className="inline-flex items-center gap-2 px-4 py-2 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors"
             >
               <FileText size={14} />
-              View Full Resume
+              Lihat Resume Lengkap
             </Link>
             <a
               href="/cv.pdf"
@@ -174,7 +173,7 @@ export default function AboutPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg border border-zinc-200 transition-colors"
             >
-              Download PDF CV <ArrowUpRight size={13} />
+              Unduh CV PDF <ArrowUpRight size={13} />
             </a>
           </div>
         </div>
@@ -184,10 +183,10 @@ export default function AboutPage() {
       <section className="space-y-6 pt-4 border-t border-zinc-200">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-zinc-900">
-            What I Work With
+            Alat & Teknologi Utama
           </h2>
           <p className="text-xs text-zinc-500 mt-1">
-            Languages, frameworks, and infrastructure tools I use regularly.
+            Bahasa pemrograman, framework, dan peralatan infrastruktur yang saya gunakan secara rutin.
           </p>
         </div>
 
@@ -223,10 +222,10 @@ export default function AboutPage() {
       <section className="space-y-6 pt-4 border-t border-zinc-200">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-zinc-900">
-            Currently Exploring
+            Fokus Eksplorasi Saat Ini
           </h2>
           <p className="text-xs text-zinc-500 mt-1">
-            Areas of deliberate technical study and hands-on laboratory experiments.
+            Area studi mandiri terarah dan eksperimen hands-on di laboratorium komputasi saya.
           </p>
         </div>
 
@@ -260,50 +259,46 @@ export default function AboutPage() {
       <section className="space-y-4 pt-4 border-t border-zinc-200">
         <div className="flex items-center gap-2 text-xl font-bold tracking-tight text-zinc-900">
           <HeartHandshake size={20} className="text-zinc-500" />
-          <h2>Outside Engineering</h2>
+          <h2>Aktivitas & Kepemimpinan Kampus</h2>
         </div>
         <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-2xl">
-          Beyond writing code and configuring servers, I have actively led and
-          contributed to student media and technical operations teams at UGM:
+          Selain menulis kode dan mengonfigurasi server, saya aktif berkontribusi dan memimpin divisi media serta operasional teknis kegiatan mahasiswa di UGM:
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
           <div className="p-4 rounded-xl border border-zinc-200 bg-white space-y-1">
             <div className="text-xs font-bold text-zinc-900">
-              Media & IT Support Staff
+              Staf Media & IT Support
             </div>
             <div className="text-[11px] text-zinc-500 font-mono">
               RDK UGM 1445H · Mar 2024
             </div>
             <p className="text-xs text-zinc-600 pt-1 leading-relaxed">
-              Managed live-streaming workflows using OBS Studio and handled
-              audio/visual troubleshooting for daily webinar broadcasts.
+              Mengelola alur siaran langsung (live streaming) dengan OBS Studio dan menyelesaikan kendala teknis audio/video selama siaran harian.
             </p>
           </div>
 
           <div className="p-4 rounded-xl border border-zinc-200 bg-white space-y-1">
             <div className="text-xs font-bold text-zinc-900">
-              Creative Media Staff
+              Staf Media Kreatif
             </div>
             <div className="text-[11px] text-zinc-500 font-mono">
               Jamaah Shalahudin UGM · 2023–2024
             </div>
             <p className="text-xs text-zinc-600 pt-1 leading-relaxed">
-              Produced and edited educational media content for organizational
-              branding and preserved digital activity archives.
+              Memproduksi konten edukasi digital untuk publikasi kelembagaan serta memelihara dokumentasi dan arsip kegiatan.
             </p>
           </div>
 
           <div className="p-4 rounded-xl border border-zinc-200 bg-white space-y-1">
             <div className="text-xs font-bold text-zinc-900">
-              Head of Media Division
+              Ketua Divisi Media
             </div>
             <div className="text-[11px] text-zinc-500 font-mono">
-              SMANA Masuk Kampus 7.0 · Dec 2023
+              SMANA Masuk Kampus 7.0 · Des 2023
             </div>
             <p className="text-xs text-zinc-600 pt-1 leading-relaxed">
-              Led the creative team in designing promotional campaigns and
-              coordinated communication between university admission divisions.
+              Memimpin tim kreatif dalam merancang materi promosi dan mengoordinasikan komunikasi publikasi dengan berbagai pihak kampus.
             </p>
           </div>
         </div>
@@ -313,10 +308,10 @@ export default function AboutPage() {
       <section className="p-6 rounded-2xl border border-zinc-200 bg-zinc-100/60 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1 text-center sm:text-left">
           <div className="text-sm font-bold text-zinc-900">
-            Interested in connecting?
+            Tertarik berdiskusi atau berkolaborasi?
           </div>
           <p className="text-xs text-zinc-600">
-            Feel free to reach out for project collaboration or technical discussions.
+            Terbuka untuk diskusi teknis, eksplorasi sistem kesehatan, maupun peluang proyek bersama.
           </p>
         </div>
 
@@ -326,7 +321,7 @@ export default function AboutPage() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors"
           >
             <Mail size={13} />
-            Email Me
+            Kirim Email
           </a>
           <a
             href="https://linkedin.com/in/andika-dwi-prasetya-3a529b299"

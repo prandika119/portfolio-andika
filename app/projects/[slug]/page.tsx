@@ -34,15 +34,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!project) {
     return {
-      title: "Project Not Found",
+      title: "Proyek Tidak Ditemukan",
     };
   }
 
   return {
-    title: `${project.frontmatter.title} | Case Study`,
+    title: `${project.frontmatter.title} | Studi Kasus`,
     description: project.frontmatter.tagline,
     openGraph: {
-      title: `${project.frontmatter.title} | Engineering Case Study`,
+      title: `${project.frontmatter.title} | Studi Kasus Rekayasa`,
       description: project.frontmatter.tagline,
       type: "article",
     },
@@ -66,16 +66,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           className="inline-flex items-center gap-1.5 text-zinc-600 hover:text-zinc-950 transition-colors"
         >
           <ArrowLeft size={13} />
-          <span>All projects</span>
+          <span>Semua proyek</span>
         </Link>
 
         <div className="hidden sm:flex items-center gap-1.5">
           <Link href="/" className="hover:text-zinc-900 transition-colors">
-            home
+            beranda
           </Link>
           <span>/</span>
           <Link href="/work" className="hover:text-zinc-900 transition-colors">
-            projects
+            proyek
           </Link>
           <span>/</span>
           <span className="text-zinc-700 font-medium truncate max-w-[200px]">
@@ -137,7 +137,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shadow-xs"
             >
               <Github size={14} />
-              View Source Repository
+              Lihat Repositori Kode
             </a>
           )}
 
@@ -149,7 +149,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg border border-zinc-200 transition-colors"
             >
               <ExternalLink size={14} />
-              Live Demo / Service
+              Demo Langsung / Layanan
             </a>
           )}
         </div>
@@ -174,15 +174,15 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-                Author & Engineering Context
+                {"// Profil Penulis & Konteks Rekayasa"}
               </div>
               <div className="text-sm font-bold text-zinc-900">
                 Andika Dwi Prasetya
               </div>
               <p className="text-xs text-zinc-600 max-w-md leading-relaxed">
-                Software Engineering student at Universitas Gadjah Mada. This case
-                study captures problem framing, architecture, trade-offs, and
-                debugging outcomes.
+                Mahasiswa Teknologi Rekayasa Perangkat Lunak di Universitas Gadjah Mada.
+                Studi kasus ini merangkum perumusan masalah, arsitektur sistem, trade-off keputusan
+                teknis, serta hasil pengujian dan debugging.
               </p>
             </div>
 
@@ -221,14 +221,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             href="/work"
             className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-zinc-700 hover:text-zinc-950 transition-colors"
           >
-            <ArrowLeft size={13} /> Back to all projects
+            <ArrowLeft size={13} /> Kembali ke semua proyek
           </Link>
 
           <Link
             href="/notes"
             className="text-xs font-mono text-zinc-500 hover:text-zinc-900 transition-colors"
           >
-            Read technical notes →
+            Baca catatan teknis →
           </Link>
         </div>
       </footer>

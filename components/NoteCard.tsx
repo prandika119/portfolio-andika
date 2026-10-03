@@ -71,7 +71,7 @@ export function NoteCard({ note }: NoteCardProps) {
           href={`/notes/${note.category}/${note.slug}`}
           className="inline-flex items-center gap-1 text-xs font-medium text-zinc-700 group-hover:text-zinc-950 transition-colors shrink-0"
         >
-          Read note <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+          Baca catatan <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
     </article>

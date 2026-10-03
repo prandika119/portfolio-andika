@@ -1,21 +1,113 @@
 ---
-title: "Enterprise AI Document Management & RAG Assistant"
-tagline: "Retrieval-Augmented Generation pipeline powering intelligent document search with local LLMs and citation tracking."
+title: "Sistem Manajemen Dokumen Cerdas & Asisten RAG Lokal"
+tagline: "Pipeline Retrieval-Augmented Generation (RAG) untuk query dokumen internal secara cerdas menggunakan LLM lokal dan verifikasi kutipan."
 date: "2026-04-10"
 role: "Full Stack & AI Engineer Intern"
-techStack: ["FastAPI", "Python", "Next.js", "Ollama", "Vector DB", "Docker"]
+techStack: ["FastAPI", "Python", "Next.js", "Ollama", "Vector DB", "Docker", "Express.js"]
 featured: true
-status: "Completed Prototype"
+status: "Prototipe Selesai / Magang Produksi"
 repoUrl: "https://github.com/prandika"
 demoUrl: ""
 ---
 
-# Enterprise AI Document Management & RAG Assistant
+# Sistem Manajemen Dokumen Cerdas & Asisten RAG Lokal
 
-Built during my internship at PT Parama Data Unit to allow organizations to query internal policy, technical, and operational documentation with zero data exposure to external cloud providers.
+Proyek ini dibangun selama masa magang saya di **PT Parama Data Unit** sebagai respons terhadap kebutuhan pengelolaan dan pencarian ribuan lembar dokumen operasional, kebijakan teknis, dan SOP perusahaan yang tersebar dalam format PDF dan dokumen kantor.
 
-## Key Architecture
+Tantangan terbesarnya: **kepatuhan kerahasiaan data (*strict data privacy*)**. Dokumen operasional tidak boleh dikirim ke API model bahasa pihak ketiga (seperti OpenAI publik). Oleh karena itu, seluruh pipeline inferensi harus berjalan sepenuhnya di server lokal (*on-premises*) menggunakan model open-weights yang dijalankan melalui **Ollama** dan backend berkecepatan tinggi dengan **FastAPI**.
 
-- **Ingestion Pipeline:** Automatic document chunking with page number preservation for citation integrity.
-- **Inference Server:** Local LLMs orchestrated via Ollama and exposed through an asynchronous FastAPI backend.
-- **Client Frontend:** Next.js application supporting real-time streaming tokens and click-to-cite preview cards.
+---
+
+## 1. Masalah yang Dihadapi Perusahaan
+
+1. **Pencarian Kata Kunci Tradisional Sering Gagal:** Karyawan sering lupa kata kunci persis pada dokumen SOP yang dicari. Pencarian berbasis string biasa (*Ctrl+F*) tidak memahami konteks semantik pertanyaan.
+2. **Keterbatasan Memori Komputasi Lokal:** Server internal kantor tidak memiliki cluster GPU sekelas pusat data cloud, sehingga model bahasa yang digunakan harus efisien (rentang parameter 3B hingga 8B) namun tetap akurat.
+3. **Risiko Halusinasi AI:** Jika asisten AI mengarang jawaban (*hallucination*) pada dokumen hukum atau teknis, dampaknya bisa fatal bagi operasional. Jawaban harus selalu menyertakan nomor halaman dan kutipan dokumen aslinya.
+
+---
+
+## 2. Arsitektur Pipeline RAG
+
+Pipeline dirancang secara modular agar tahap pengindeksan dokumen (*ingestion*) tidak membebani proses tanya-jawab pengguna (*query latency*).
+
+```text
+[ Dokumen PDF / SOP Internal ]
+            │
+            ▼
+┌───────────────────────────────────────┐
+│        PDF Parsing & Cleaning         │
+│  (Deteksi Struktur Judul & Paragraf)  │
+└───────────────────┬───────────────────┘
+                    │
+                    ▼
+┌───────────────────────────────────────┐
+│     Header-Aware Semantic Chunking    │
+│    (Chunk ~500 token, 15% overlap)    │
+└───────────────────┬───────────────────┘
+                    │
+                    ▼
+┌───────────────────────────────────────┐
+│      Embedding Generation Engine      │
+│         (Model Vektor Lokal)          │
+└───────────────────┬───────────────────┘
+                    │
+                    ▼
+┌───────────────────────────────────────┐
+│        Vector Database Store          │
+│       (Penyimpanan Dense Index)       │
+└───────────────────┬───────────────────┘
+                    │
+                    ├──────────────────────────┐
+                    │ Pertanyaan Karyawan      │
+                    ▼                          ▼
+┌────────────────────────────────────────────────────────┐
+│           FastAPI Asynchronous Gateway                 │
+│  ┌──────────────────────┐    ┌──────────────────────┐  │
+│  │  Semantic Retrieval  │ ─> │  Ollama Local LLM    │  │
+│  │  (Top-k Chunks)      │    │  (Inference Stream)  │  │
+│  └──────────────────────┘    └──────────┬───────────┘  │
+└─────────────────────────────────────────┼──────────────┘
+                                          │ Streaming Tokens
+                                          ▼
+                             ┌────────────────────────┐
+                             │    Next.js Client      │
+                             │ (Jawaban + Kutipan Hal)│
+                             └────────────────────────┘
+```
+
+---
+
+## 3. Kendala Nyata & Cerita Debugging (What Went Wrong)
+
+<Callout type="warning" title="Masalah 1: Halusinasi Akibat Pemotongan Teks Acak (Fixed-Size Chunking)">
+  Pada implementasi awal, teks dokumen dipecah setiap 500 karakter secara merata. Akibatnya, tabel spesifikasi teknis dan pasal-pasal SOP sering terpotong tepat di tengah kalimat. Ketika model LLM ditanya, ia menggabungkan dua potongan konteks yang terpisah dan mengarang (*hallucinating*) informasi yang keliru.
+</Callout>
+
+* **Solusi Rekayasa:**  
+  Mengganti algoritma pemotongan dengan **Header-Aware Recursive Chunking**. Algoritma ini memindai struktur heading (Bab, Sub-bab, Paragraf) sebelum memotong teks. Setiap chunk mempertahankan metadata dokumen (nama file, nomor halaman, dan judul bab induk), serta diberi overlap sebesar 15% agar kesinambungan makna tetap utuh. Akurasi jawaban meningkat drastis setelah perubahan ini.
+
+<Callout type="note" title="Masalah 2: Thread Blocking dan Lonjakan Latensi API">
+  Saat model 7B melakukan inferensi pada server lokal, proses komputasi CPU/VRAM menahan thread eksekusi FastAPI jika dipanggil secara sinkron. Pengguna lain yang sedang membuka aplikasi mengalami waktu tunggu (*hang*) hingga 10–15 detik.
+</Callout>
+
+* **Solusi Rekayasa:**  
+  Merombak endpoint inferensi menjadi **Asynchronous Generator** dengan *Server-Sent Events (SSE)*:
+  ```python
+  @app.post("/api/query")
+  async def query_document(payload: QueryRequest):
+      async def token_stream():
+          context_chunks = await vector_store.similarity_search(payload.question, k=4)
+          async for token in ollama_client.stream_generate(payload.question, context_chunks):
+              yield f"data: {json.dumps({'token': token})}\n\n"
+      
+      return StreamingResponse(token_stream(), media_type="text/event-stream")
+  ```
+  Dengan token streaming, waktu tunggu respons awal (*Time-To-First-Token / TTFT*) turun di bawah 1,5 detik, dan pengguna di sisi Next.js langsung melihat teks diketik secara real-time.
+
+---
+
+## 4. Hasil & Evaluasi Kinerja
+
+* **Verifikasi Kutipan (Citation Tracking):** Setiap jawaban asisten AI secara otomatis melampirkan kartu referensi sumber (*"Berdasarkan SOP Kepegawaian Hal. 12"*). Pengguna dapat mengklik kartu tersebut untuk memverifikasi teks aslinya.
+* **Privasi 100% On-Premise:** Nol data yang dikirim ke penyedia cloud eksternal, sepenuhnya memenuhi audit kepatuhan internal perusahaan.
+* **Pembelajaran Terbesar:** Kualitas jawaban sistem RAG **80% ditentukan oleh tahap kurasi data dan retrieval (chunking, representasi tabel, filtering metadata)**, bukan semata-mata besarnya ukuran model bahasa.

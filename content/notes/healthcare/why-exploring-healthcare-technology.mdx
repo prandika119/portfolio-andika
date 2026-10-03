@@ -1,30 +1,57 @@
 ---
-title: "Why I'm Exploring Healthcare Technology as a Software Engineer"
-description: "Reflections on moving from general web development toward healthcare interoperability, HL7 FHIR standards, and the SATUSEHAT ecosystem in Indonesia."
+title: "Mengapa Saya Mendalami Teknologi Kesehatan sebagai Software Engineer"
+description: "Refleksi personal mengenai transisi dari web engineering umum menuju eksplorasi interoperabilitas klinis, standar HL7 FHIR, dan inisiatif SATUSEHAT di Indonesia."
 date: "2026-03-15"
 category: "healthcare"
-tags: ["Healthcare IT", "FHIR", "SATUSEHAT", "Interoperability"]
+tags: ["Healthcare IT", "HL7 FHIR", "SATUSEHAT", "Interoperabilitas", "Rekam Medis"]
 featured: true
 status: "published"
 ---
 
-# Why I'm Exploring Healthcare Technology as a Software Engineer
+# Mengapa Saya Mendalami Teknologi Kesehatan sebagai Software Engineer
 
-As a Software Engineering Technology student at Universitas Gadjah Mada with background in full-stack web applications, I have often wondered where engineering can create the most tangible, high-stakes impact.
+Sebagai mahasiswa Teknologi Rekayasa Perangkat Lunak di Universitas Gadjah Mada yang mengawali perjalanan dari web development full-stack, pertanyaan yang sering muncul di benak saya adalah:
 
-General SaaS applications and e-commerce platforms are exciting, but healthcare presents a fundamentally different challenge: **fragmentation and data interoperability**.
+> *"Di manakah rekayasa perangkat lunak dapat memberikan dampak nyata yang paling krusial bagi hajat hidup orang banyak?"*
 
-## The Problem of Data Silos in Healthcare
+Aplikasi e-commerce dan platform media sosial tentu menarik secara skala traffic. Namun, ketika saya mulai mempelajari sistem informasi kesehatan, saya menemukan sebuah domain dengan kompleksitas arsitektur yang sangat menantang dan sarat tanggung jawab etis: **fragmentasi data rekam medis pasien**.
 
-When you visit a clinic, your health records often stay locked inside that single hospital or clinic's database (SIMRS / RME). If you move to another hospital, doctors often have to start over diagnosing your medical history or asking you to repeat laboratory tests.
+---
 
-In Indonesia, the Ministry of Health has introduced **SATUSEHAT**, built on the international **HL7 FHIR (Fast Healthcare Interoperability Resources)** standard, aiming to connect thousands of health facilities into a standardized data exchange pipeline.
+## 1. Realitas Fragmentasi: Masalah "Silo Data" di Fasilitas Kesehatan
 
-## My Engineering Approach
+Di Indonesia, jika Anda berobat ke sebuah klinik swasta, lalu dirujuk ke rumah sakit daerah, riwayat diagnosis, alergi obat, dan hasil laboratorium Anda seringkali tertahan di server lokal klinik pertama. Dokter di rumah sakit rujukan terpaksa menanyakan ulang riwayat medis dari ingatan pasien atau meminta tes laboratorium diulang.
 
-Rather than approaching this purely from policy or theory, I approach it as a backend systems engineer:
-- How do we map messy relational database schemas into FHIR resources like `Patient`, `Encounter`, and `Observation`?
-- How do we handle network retries and data consistency when syncing with government sandbox APIs?
-- How do we ensure strict privacy and audit logging?
+Secara teknis, hal ini disebabkan oleh:
+* **Perbedaan Model Basis Data:** Setiap pengembang SIMRS (Sistem Informasi Manajemen Rumah Sakit) atau vendor Rekam Medis Elektronik (RME) merancang tabel SQL dengan nama kolom dan format tipe data yang berbeda-beda.
+* **Ketiadaan Kamus Terminologi Standar:** Satu klinik mencatat *"Batuk Kering"*, klinik lain mencatat *"Tussis Sicca"*, dan rumah sakit mencatat kode ICD-10 `R05`. Tanpa standardisasi, komputer tidak dapat memetakan bahwa ketiganya merujuk pada kondisi medis yang sama.
 
-This journal documents my technical explorations, lessons, and experiments as I delve deeper into healthcare engineering.
+<Callout type="note" title="Prinsip Kejujuran Teknis">
+  Saya bukan dokter dan tidak memiliki latar belakang medis. Sudut pandang saya murni sebagai **sistem engineer**: bagaimana data yang heterogen dapat ditransformasikan, divalidasi, dan ditransmisikan secara konsisten tanpa merusak integritas klinisnya.
+</Callout>
+
+---
+
+## 2. Hadirnya SATUSEHAT dan Bahasa Universal Bernama HL7 FHIR
+
+Kementerian Kesehatan RI mengambil langkah strategis dengan mencanangkan ekosistem **SATUSEHAT**. Fondasi utama dari SATUSEHAT adalah adopsi standar internasional **HL7 FHIR (Fast Healthcare Interoperability Resources)** versi R4.
+
+Bagi seorang backend developer, FHIR terasa sangat elegan karena:
+1. **Berbasis RESTful API Modern:** Menggunakan pertukaran data JSON, metode standar HTTP (`GET`, `POST`, `PUT`), dan status code yang lazim.
+2. **Resource-Oriented:** Data klinis dipecah menjadi modul-modul independen yang disebut *Resource*, seperti:
+   * `Patient`: Representasi demografi pasien.
+   * `Encounter`: Kunjungan pasien ke faskes (rawat jalan, UGD, rawat inap).
+   * `Condition`: Diagnosis masalah kesehatan berbasis kode **ICD-10**.
+   * `Observation`: Pengukuran tanda vital dan laboratorium berbasis kode **LOINC**.
+   * `MedicationRequest`: Resep obat berbasis kamus **KFA (Kamus Farmasi dan Alat Kesehatan)**.
+
+---
+
+## 3. Pendekatan Eksperimen Rekayasa Saya
+
+Mendalami teknologi kesehatan tidak cukup hanya dengan membaca dokumen regulasi Kemenkes. Di laboratorium pribadi saya, saya mengeksplorasinya melalui proyek konkret:
+* Membangun middleware transformer untuk mengubah skema SQL lokal posyandu menjadi resource FHIR `Patient` dan `Observation`.
+* Meneliti alur autentikasi OAuth2 client-credentials pada Sandbox SATUSEHAT dan menyusun strategi retry otomatis saat terjadi network failure.
+* Memastikan seluruh data pengujian menggunakan **data sintetis/fiktif** untuk menghormati privasi pasien dan undang-undang perlindungan data pribadi (UU PDP).
+
+Melalui buku catatan ini, saya mendokumentasikan setiap eksperimen, kendala integrasi, dan pembelajaran rekayasa yang saya temui di sepanjang perjalanan.

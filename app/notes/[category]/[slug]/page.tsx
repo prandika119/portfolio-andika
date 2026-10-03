@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!note) {
     return {
-      title: "Note Not Found",
+      title: "Catatan Tidak Ditemukan",
     };
   }
 
@@ -84,16 +84,16 @@ export default async function NoteDetailPage({ params }: PageProps) {
           className="inline-flex items-center gap-1.5 text-zinc-600 hover:text-zinc-950 transition-colors"
         >
           <ArrowLeft size={13} />
-          <span>All notes</span>
+          <span>Semua catatan</span>
         </Link>
 
         <div className="hidden sm:flex items-center gap-1.5">
           <Link href="/" className="hover:text-zinc-900 transition-colors">
-            home
+            beranda
           </Link>
           <span>/</span>
           <Link href="/notes" className="hover:text-zinc-900 transition-colors">
-            notes
+            catatan
           </Link>
           <span>/</span>
           <span className="text-zinc-700 font-medium">{note.category}</span>
@@ -164,15 +164,15 @@ export default async function NoteDetailPage({ params }: PageProps) {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-                Author & Engineering Context
+                {"// Profil Penulis & Konteks Rekayasa"}
               </div>
               <div className="text-sm font-bold text-zinc-900">
                 Andika Dwi Prasetya
               </div>
               <p className="text-xs text-zinc-600 max-w-md leading-relaxed">
-                Software Engineering student at Universitas Gadjah Mada. Writing
-                about practical backend systems, healthcare data interoperability,
-                and local AI implementations.
+                Mahasiswa Teknologi Rekayasa Perangkat Lunak di Universitas Gadjah Mada.
+                Menulis tentang rekayasa sistem backend praktis, interoperabilitas data kesehatan,
+                dan implementasi AI lokal.
               </p>
             </div>
 
@@ -211,14 +211,14 @@ export default async function NoteDetailPage({ params }: PageProps) {
             href="/notes"
             className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-zinc-700 hover:text-zinc-950 transition-colors"
           >
-            <ArrowLeft size={13} /> Back to all notes
+            <ArrowLeft size={13} /> Kembali ke semua catatan
           </Link>
 
           <Link
             href="/work"
             className="text-xs font-mono text-zinc-500 hover:text-zinc-900 transition-colors"
           >
-            Explore related projects →
+            Jelajahi proyek terkait →
           </Link>
         </div>
       </footer>

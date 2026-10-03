@@ -3,9 +3,9 @@ import { getAllCategories, getAllNotes } from "@/lib/content";
 import { NotesFilter } from "@/components/NotesFilter";
 
 export const metadata: Metadata = {
-  title: "Technical Notes",
+  title: "Catatan Teknis",
   description:
-    "Engineering notebook, technical deep-dives, and learning logs by Andika Dwi Prasetya. Exploring healthcare IT, AI/RAG, and backend systems.",
+    "Buku catatan rekayasa perangkat lunak, eksplorasi teknis mendalam, dan jurnal pembelajaran oleh Andika Dwi Prasetya. Fokus pada teknologi kesehatan (SATUSEHAT & HL7 FHIR), AI/RAG, dan sistem backend.",
 };
 
 export default function NotesPage() {
@@ -17,15 +17,15 @@ export default function NotesPage() {
       {/* Page Header */}
       <section className="space-y-3">
         <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-          {"// Technical Writing & Learning Journal"}
+          {"// Tulisan Teknis & Jurnal Pembelajaran"}
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
-          Technical Notes
+          Catatan Teknis
         </h1>
         <p className="text-base text-zinc-600 leading-relaxed max-w-2xl">
-          Documenting what I build, what I break, and what I learn. Engineering
-          deep-dives, failure logs, and architectural reflections written from
-          direct experience.
+          Mendokumentasikan apa yang saya bangun, kendala yang dihadapi, dan
+          pembelajaran teknis yang dipetik. Eksplorasi mendalam, catatan
+          kegagalan, dan refleksi arsitektur yang ditulis langsung dari pengalaman nyata.
         </p>
       </section>
 

@@ -12,32 +12,32 @@ import { experiences } from "@/data/experience";
 import { getAllProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Work & Experience",
+  title: "Pengalaman & Proyek",
   description:
-    "Engineering track record, professional experience timeline, and software project showcase of Andika Dwi Prasetya.",
+    "Rekam jejak rekayasa, linimasa pengalaman profesional, dan studi kasus proyek perangkat lunak Andika Dwi Prasetya.",
 };
 
 const organizations = [
   {
-    title: "Media & IT Support Staff",
+    title: "Staf Media & IT Support",
     org: "Ramadhan Di Kampus (RDK) UGM 1445H",
     date: "Mar 2024",
     description:
-      "Configured OBS Studio for multi-camera streaming and monitored live audio/video bitrate during daily hybrid Ramadan webinar broadcasts.",
+      "Mengonfigurasi OBS Studio untuk siaran multi-kamera dan memantau stabilitas bitrate audio/video live selama webinar hybrid Ramadhan harian.",
   },
   {
-    title: "Creative Media Staff",
+    title: "Staf Media Kreatif",
     org: "Jamaah Shalahudin UGM",
-    date: "Oct 2023 — Mar 2024",
+    date: "Okt 2023 — Mar 2024",
     description:
-      "Produced educational video content and coordinated digital archiving of campus activities.",
+      "Memproduksi konten edukasi digital dan mengoordinasikan pengarsipan media kegiatan organisasi secara terpusat.",
   },
   {
-    title: "Head of Media Division",
+    title: "Ketua Divisi Media",
     org: "SMANA Masuk Kampus 7.0",
-    date: "Dec 2023",
+    date: "Des 2023",
     description:
-      "Directed the promotional media campaign and coordinated communication channels across campus admission committees.",
+      "Mengarahkan strategi kampanye promosi dan mengoordinasikan kanal publikasi media ke calon mahasiswa baru.",
   },
 ];
 
@@ -49,14 +49,15 @@ export default function WorkPage() {
       {/* 1. Header */}
       <section className="space-y-3">
         <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-          {"// Engineering Track Record"}
+          {"// Rekam Jejak Rekayasa"}
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
-          Work & Experience
+          Pengalaman & Proyek
         </h1>
         <p className="text-base text-zinc-600 leading-relaxed max-w-2xl">
-          What I build, how I solve real-world problems, and the lessons learned
-          across professional teams and independent experiments.
+          Apa yang saya bangun, bagaimana saya menyelesaikan masalah nyata, dan
+          pelajaran teknis yang dipetik dari pengalaman profesional di industri
+          maupun riset mandiri.
         </p>
       </section>
 
@@ -65,7 +66,7 @@ export default function WorkPage() {
         <div className="flex items-center gap-2 pb-2 border-b border-zinc-200">
           <Briefcase size={16} className="text-zinc-500" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-            Professional Experience Timeline
+            Linimasa Pengalaman Profesional
           </h2>
         </div>
 
@@ -96,7 +97,7 @@ export default function WorkPage() {
                 </div>
               </div>
 
-              {/* Problem/Context Description */}
+              {/* Context Description */}
               <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
                 {exp.description}
               </p>
@@ -104,7 +105,7 @@ export default function WorkPage() {
               {/* Responsibilities */}
               <div className="space-y-1.5 text-xs text-zinc-700">
                 <div className="font-mono text-[11px] uppercase tracking-wider text-zinc-400 font-semibold">
-                  Responsibilities:
+                  Tanggung Jawab:
                 </div>
                 <ul className="space-y-1.5 pl-4 list-disc marker:text-zinc-400">
                   {exp.responsibilities.map((resp, i) => (
@@ -120,7 +121,7 @@ export default function WorkPage() {
                 <div className="p-4 rounded-xl bg-zinc-50 border border-zinc-200/80 space-y-2 text-xs">
                   <div className="flex items-center gap-1.5 font-bold text-zinc-900 text-xs">
                     <CheckCircle2 size={14} className="text-emerald-600" />
-                    Key Contributions & Impact
+                    Kontribusi & Pencapaian Utama
                   </div>
                   <ul className="space-y-1 pl-4 list-disc marker:text-zinc-400 text-zinc-600">
                     {exp.keyContributions.map((contrib, i) => (
@@ -137,7 +138,7 @@ export default function WorkPage() {
                 <div className="p-4 rounded-xl bg-amber-50/40 border border-amber-200/60 space-y-2 text-xs">
                   <div className="flex items-center gap-1.5 font-bold text-amber-900 text-xs">
                     <Lightbulb size={14} className="text-amber-600" />
-                    Engineering Lessons Learned
+                    Pelajaran Rekayasa Teknis (Lessons Learned)
                   </div>
                   <ul className="space-y-1 pl-4 list-disc marker:text-amber-400 text-amber-900/80">
                     {exp.lessonsLearned.map((lesson, i) => (
@@ -171,11 +172,11 @@ export default function WorkPage() {
           <div className="flex items-center gap-2">
             <FolderGit2 size={16} className="text-zinc-500" />
             <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-              Engineering Projects & Labs
+              Proyek Rekayasa & Lab Eksperimen
             </h2>
           </div>
           <span className="text-xs font-mono text-zinc-400">
-            {projects.length} Projects Documented
+            {projects.length} Proyek Terdokumentasi
           </span>
         </div>
 
@@ -223,7 +224,7 @@ export default function WorkPage() {
                     href={`/projects/${project.slug}`}
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors"
                   >
-                    Read Case Study <ArrowUpRight size={13} />
+                    Baca Studi Kasus <ArrowUpRight size={13} />
                   </Link>
 
                   {project.frontmatter.repoUrl && (
@@ -233,7 +234,7 @@ export default function WorkPage() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg border border-zinc-200 transition-colors"
                     >
-                      <Github size={13} /> Repository
+                      <Github size={13} /> Repositori
                     </a>
                   )}
                 </div>
@@ -246,7 +247,7 @@ export default function WorkPage() {
       {/* 4. Campus IT & Leadership Experience */}
       <section className="space-y-4 pt-4 border-t border-zinc-200">
         <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-          Campus Leadership & Technical Operations
+          Aktivitas Kampus & Operasional Teknis
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

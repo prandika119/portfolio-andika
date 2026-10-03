@@ -14,9 +14,9 @@ export function Footer() {
               Andika Dwi Prasetya
             </div>
             <p className="text-xs text-zinc-500 leading-relaxed">
-              Personal engineering notebook & living portfolio. Exploring AI,
-              healthcare interoperability (HL7 FHIR / SATUSEHAT), and backend
-              systems.
+              Buku catatan engineering dan living portfolio pribadi. Mendalami
+              sistem backend, interoperabilitas data kesehatan (HL7 FHIR /
+              SATUSEHAT), dan implementasi AI lokal.
             </p>
             <div className="pt-1 text-[11px] font-mono text-zinc-400">
               Yogyakarta, Indonesia · UTC+7
@@ -27,22 +27,22 @@ export function Footer() {
           <div className="flex flex-col sm:flex-row gap-8 text-xs">
             <div className="space-y-2.5">
               <div className="font-mono uppercase tracking-wider text-zinc-400 text-[10px]">
-                Navigation
+                Navigasi
               </div>
               <ul className="space-y-2">
                 <li>
                   <Link href="/work" className="hover:text-zinc-900 transition-colors">
-                    Work & Experience
+                    Karya & Pengalaman
                   </Link>
                 </li>
                 <li>
                   <Link href="/notes" className="hover:text-zinc-900 transition-colors">
-                    Technical Notes
+                    Catatan Teknis
                   </Link>
                 </li>
                 <li>
                   <Link href="/about" className="hover:text-zinc-900 transition-colors">
-                    About Me
+                    Tentang Saya
                   </Link>
                 </li>
                 <li>
@@ -55,7 +55,7 @@ export function Footer() {
 
             <div className="space-y-2.5">
               <div className="font-mono uppercase tracking-wider text-zinc-400 text-[10px]">
-                Connect
+                Terhubung
               </div>
               <ul className="space-y-2">
                 <li>
@@ -99,14 +99,13 @@ export function Footer() {
         {/* Colophon & Copyright */}
         <div className="mt-10 pt-6 border-t border-zinc-200/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-400 font-mono">
           <div>
-            © {currentYear} Andika Dwi Prasetya. All rights reserved.
+            © {currentYear} Andika Dwi Prasetya. Hak cipta dilindungi.
           </div>
           <div>
-            Built with Next.js 16, MDX & Tailwind CSS
+            Dibangun dengan Next.js 16, MDX & Tailwind CSS
           </div>
         </div>
       </div>
     </footer>
   );
 }
-

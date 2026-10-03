@@ -1,27 +1,81 @@
 ---
-title: "Building My Home Lab: Turning an Old Laptop into an Engineering Playground"
-description: "How setting up Linux, Docker containers, reverse proxies, and local networking provided practical systems intuition beyond typical web tutorials."
+title: "Membangun Home Lab: Mengubah Laptop Bekas Menjadi Server Eksperimen"
+description: "Pengalaman praktis menginstal Ubuntu Server pada ThinkPad lama, konfigurasi Docker, reverse proxy, dan akses jarak jauh aman via Tailscale."
 date: "2026-01-14"
 category: "systems"
-tags: ["Linux", "Docker", "Networking", "HomeLab", "Self-hosting"]
+tags: ["Linux", "Docker", "Networking", "HomeLab", "Self-hosting", "Tailscale"]
 featured: false
 status: "published"
 ---
 
-# Building My Home Lab: Turning an Old Laptop into an Engineering Playground
+# Membangun Home Lab: Mengubah Laptop Bekas Menjadi Server Eksperimen
 
-I believe that true backend engineering intuition comes from understanding what happens beneath the application runtime. To understand operating systems, networking, and daemon management, I repurposed an old idle laptop into a dedicated home Linux server.
+Bagi seorang backend developer, ada pemahaman yang sulit didapat hanya dengan menyewa VPS di cloud: **pemahaman tentang apa yang sebenarnya terjadi di layer sistem operasi, jaringan fisik, dan daemon Linux**.
 
-## Hardware & Operating System Setup
+Untuk mendapatkan intuisi tersebut tanpa mengeluarkan biaya sewa server bulanan yang mahal, saya memutuskan mengubah laptop lama yang sudah tidak terpakai (Lenovo ThinkPad dengan prosesor Intel Core i5, RAM 8GB, dan SSD 256GB) menjadi sebuah **home server tanpa layar (*headless server*)**.
 
-- **Machine:** Lenovo ThinkPad (Intel Core i5, 8GB RAM, 256GB SSD)
-- **OS:** Ubuntu Server LTS (headless, no desktop environment)
-- **Power Management:** Configured `/etc/systemd/logind.conf` to ignore lid-close suspension so it acts as an always-on compact server.
+---
 
-## Key Services Hosted
+## 1. Menyiapkan Hardware & Sistem Operasi
 
-1. **Docker Engine & Docker Compose:** Running containers for PostgreSQL, Redis, and local development services.
-2. **Reverse Proxy (Nginx / Caddy):** Managing internal hostnames like `*.lab.local` with local SSL certificates.
-3. **Tailscale VPN:** Securely accessing home lab services from anywhere without exposing public ports.
+Langkah pertama adalah menghapus seluruh instalasi desktop dan menginstal **Ubuntu Server 24.04 LTS (Headless)**.
 
-Working with an actual Linux machine with physical network cables taught me more about DNS resolution, subnet routing, and port forwarding than dozens of online tutorials.
+Karena laptop memiliki baterai bawaan, laptop sebenarnya berfungsi mirip mini-server dengan *Uninterruptible Power Supply (UPS)* darurat jika listrik rumah padam sejenak. Namun, ada satu tantangan fisik: ketika layar laptop ditutup, sistem operasi secara default akan masuk ke mode *Sleep/Suspend*.
+
+<Callout type="tip" title="Trik Power Management Linux">
+  Agar server tetap menyala saat layar laptop ditutup rapat di sudut meja, kita perlu mengedit konfigurasi systemd login daemon di <code>/etc/systemd/logind.conf</code>:
+</Callout>
+
+```bash
+# Buka file konfigurasi
+sudo nano /etc/systemd/logind.conf
+
+# Ubah atau tambahkan baris berikut:
+HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
+
+# Restart service systemd logind
+sudo systemctl restart systemd-logind
+```
+
+Dengan konfigurasi di atas, laptop dapat ditutup dan diletakkan rapi di rak tanpa pernah mematikan proses backend yang sedang berjalan.
+
+---
+
+## 2. Arsitektur Kontainer dengan Docker Compose
+
+Seluruh layanan rekayasa di home lab dijalankan menggunakan **Docker Compose**. Ini memastikan seluruh konfigurasi layanan terdokumentasi rapi (*Infrastructure-as-Code*) dan mudah dipulihkan jika sistem perlu di-reinstall.
+
+Beberapa kontainer inti yang selalu aktif:
+* **PostgreSQL 16:** Database relasional utama untuk eksperimen skema FHIR dan simulasi kueri kompleks.
+* **Redis:** In-memory caching dan pengujian antrean tugas (*task queues*).
+* **Caddy / Nginx:** Web server reverse-proxy untuk mengelola domain internal seperti `postgres.lab.local` atau `api.lab.local` dengan sertifikat SSL lokal otomatis.
+
+---
+
+## 3. Akses Jarak Jauh Aman Menggunakan Tailscale VPN
+
+Tantangan terbesar home lab rumahan adalah IP publik yang bersifat dinamis (*CGNAT*) dari penyedia internet (ISP), sehingga server tidak bisa diakses dari luar rumah tanpa *port forwarding* berbahaya yang membuka celah keamanan.
+
+Solusi modern yang sangat elegan adalah menggunakan **Tailscale (WireGuard-based Mesh VPN)**:
+
+```bash
+# Instal Tailscale di server Ubuntu
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+```
+
+Dengan Tailscale:
+1. Server mendapatkan alamat IP privat yang statis dan aman (misalnya `100.x.y.z`).
+2. Dari laptop kampus atau smartphone di luar rumah, saya dapat melakukan `ssh andika@100.x.y.z` dengan enkripsi end-to-end tanpa perlu membuka port router rumah ke internet publik.
+
+---
+
+## 4. Kesimpulan & Manfaat bagi Perkembangan Diri
+
+Mengelola home lab sendiri melatih intuisi penting yang tidak diajarkan di tutorial framework:
+* Membaca dan menganalisis log sistem menggunakan `journalctl` dan `docker logs`.
+* Memahami alokasi memori Linux (*swap space*, *oom-killer*, dan *buffer cache*).
+* Memahami dasar-dasar jaringan komputer (resolusi DNS, subnet routing, dan firewall `ufw`).
+
+Home lab adalah tempat terbaik untuk "berani merusak dan belajar memperbaikinya kembali".

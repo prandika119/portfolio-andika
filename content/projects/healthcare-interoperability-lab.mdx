@@ -1,32 +1,124 @@
 ---
-title: "Healthcare Interoperability Lab (NutriTrack x HealthMap)"
-tagline: "An interoperable nutrition monitoring ecosystem synchronizing clinical data via FHIR-aligned REST APIs."
+title: "Laboratorium Interoperabilitas Kesehatan (NutriTrack x SATUSEHAT / FHIR)"
+tagline: "Ekosistem pemantauan gizi terintegrasi yang menyinkronkan data klinis faskes ke standar HL7 FHIR dan sandbox SATUSEHAT."
 date: "2025-06-15"
 role: "Backend & Systems Engineer"
-techStack: ["REST API", "PostgreSQL", "FHIR", "Docker", "Node.js"]
+techStack: ["REST API", "PostgreSQL", "HL7 FHIR", "Docker", "Node.js", "Express.js"]
 featured: true
-status: "Completed / Active Lab"
+status: "Active Lab / Prototipe Selesai"
 repoUrl: "https://github.com/prandika"
 demoUrl: ""
 ---
 
-# Healthcare Interoperability Lab (NutriTrack x HealthMap)
+# Laboratorium Interoperabilitas Kesehatan (NutriTrack x SATUSEHAT / FHIR)
 
-NutriTrack x HealthMap is an experimental healthcare interoperability project designed to bridge nutrition monitoring platforms and geographic health tracking systems through a shared standardized data pipeline.
+Proyek ini merupakan eksperimen rekayasa perangkat lunak klinis untuk memecahkan salah satu masalah paling mendasar dalam digitalisasi kesehatan di Indonesia: **fragmentasi data antar fasilitas pelayanan kesehatan (faskes)**.
 
-## Problem & Motivation
+Melalui studi kasus integrasi antara platform pencatatan gizi posyandu/puskesmas (*NutriTrack*) dan visualisasi spasial demografi (*HealthMap*), proyek ini membangun *gateway* interoperabilitas yang mentransformasikan data relasional internal menjadi format standar **HL7 FHIR** yang kompatibel dengan ekosistem **SATUSEHAT** Kementerian Kesehatan RI.
 
-Healthcare applications frequently store malnutrition metrics in isolated proprietary structures. Public health officers cannot cross-correlate nutritional deficiencies with regional demographics without manual data export and reconciliation.
+---
 
-## Architecture
+## 1. Latar Belakang & Masalah
 
-The system coordinates two independent subsystems:
-- **NutriTrack Service:** Handles patient intake, anthropometric measurements (weight, height, age), and growth chart calculations.
-- **HealthMap Service:** Visualizes spatial distribution of nutritional status across health districts.
-- **Interoperability Gateway:** Transforms internal records into standardized FHIR-compliant payloads (`Patient` and `Observation` resources) for synchronization.
+Di banyak daerah, data antropometri anak (seperti pengukuran berat badan, tinggi badan, dan deteksi stunting) dicatat pada aplikasi faskes yang terisolasi (*silo data*). Akibatnya:
+1. Riwayat pertumbuhan anak terputus ketika pasien berpindah klinik atau dirujuk ke rumah sakit umum daerah (RSUD).
+2. Dinas kesehatan kesulitan memvalidasi data stunting secara real-time karena format ekspor data dari tiap vendor SIMRS atau aplikasi klinik berbeda-beda.
+3. Sinkronisasi manual menggunakan spreadsheet memakan waktu berminggu-minggu dan rentan kesalahan manusia (*human error*).
 
-## What Went Wrong & Debugging Stories
+Tujuan proyek ini adalah membuktikan bahwa faskes dengan sistem informasi lokal yang sederhana tetap dapat terhubung ke ekosistem data kesehatan nasional secara otomatis, aman, dan mematuhi spesifikasi standar FHIR R4.
 
-During early integration testing, concurrent webhook syncs caused duplicate observation entries in the analytics store due to race conditions during network latency spikes.
+---
 
-**Solution:** Implemented idempotency keys on every ingestion payload and structured transactional upsert logic in PostgreSQL, ensuring that retransmitted packets safely resolve without duplicated clinical observations.
+## 2. Arsitektur Sistem & Alur Interoperabilitas
+
+Sistem dirancang dengan arsitektur berlapis (*layered gateway architecture*) agar logika internal aplikasi faskes tidak terikat mati (*tightly coupled*) dengan kontrak API pemerintah yang sewaktu-waktu dapat berubah.
+
+```text
+┌─────────────────────────┐          ┌─────────────────────────┐
+│       NutriTrack        │          │        HealthMap        │
+│ (Input Antropometri/RME)│          │  (Visualisasi Spasial)  │
+└────────────┬────────────┘          └────────────▲────────────┘
+             │ Webhook Sync                       │ Query Data Terstandar
+             ▼                                    │
+┌─────────────────────────────────────────────────┴────────────┐
+│                  Interoperability Gateway                    │
+│  ┌───────────────────────┐         ┌──────────────────────┐  │
+│  │   Ingestion & Auth    │ ──────> │ FHIR Resource Mapper │  │
+│  │   (Token & Idempotency│         │ (Patient/Observation)│  │
+│  └───────────────────────┘         └──────────┬───────────┘  │
+└───────────────────────────────────────────────┼──────────────┘
+                                                │ HTTPS / OAuth2
+                                                ▼
+                                    ┌──────────────────────┐
+                                    │  SATUSEHAT Sandbox   │
+                                    │   (Kemenkes RI API)  │
+                                    └──────────────────────┘
+```
+
+### Resource FHIR yang Diimplementasikan:
+* **`Patient` Resource:** Menyimpan identitas pasien dengan pemetaan identifier NIK (tersamarkan/disamarkan untuk sandbox), nama, jenis kelamin, dan tanggal lahir sesuai format FHIR:
+  ```json
+  {
+    "resourceType": "Patient",
+    "identifier": [
+      {
+        "use": "official",
+        "system": "https://fhir.kemkes.go.id/id/nik",
+        "value": "3302xxxxxxxxxxxx"
+      }
+    ],
+    "name": [{ "use": "official", "text": "Anak B (Data Uji)" }],
+    "gender": "male",
+    "birthDate": "2024-01-15"
+  }
+  ```
+* **`Observation` Resource:** Menyimpan hasil pengukuran vital/antropometri:
+  * Berat Badan (Body Weight): Menggunakan kode terminologi standar **LOINC `29463-7`**.
+  * Tinggi/Panjang Badan (Body Height): Menggunakan kode **LOINC `8302-2`**.
+  * Status Gizi / Z-Score: Dikaitkan ke *Encounter* pemeriksaan puskesmas.
+
+---
+
+## 3. Kendala Nyata & Cerita Debugging (What Went Wrong)
+
+Bagian ini mendokumentasikan kegagalan nyata yang terjadi selama fase pengembangan dan bagaimana solusinya dirumuskan.
+
+<Callout type="warning" title="Masalah 1: Kedaluwarsa Token OAuth2 pada Batch Processing">
+  Saat menguji pengiriman data batch (50+ catatan observasi sekaligus), request awal berhasil namun request ke-20 dan seterusnya mulai menghasilkan respons `401 Unauthorized` secara mendadak dari server sandbox SATUSEHAT.
+</Callout>
+
+* **Penyebab:** Siklus hidup token OAuth2 client-credentials pada sandbox memiliki masa berlaku yang ketat (biasanya 50–60 menit). Namun, ketika proses worker mengalami antrean request yang padat atau server sandbox mengalami throttling, token habis di tengah jalan tanpa mekanisme refresh otomatis.
+* **Solusi Rekayasa:**
+  Membangun modul *Token Manager* dengan in-memory caching di Node.js. Modul ini menghitung waktu kedaluwarsa (`expires_in`) dan secara proaktif meminta token baru apabila sisa masa berlaku token kurang dari 5 menit (*proactive buffer*).
+
+<Callout type="note" title="Masalah 2: Observasi Ganda Akibat Retransmit Webhook">
+  Ketika koneksi internet puskesmas mengalami fluktuasi, request webhook sync mengalami timeout di sisi klien. Klien secara otomatis mengirim ulang request yang sama, menyebabkan data berat badan pasien tercatat dua kali pada detik yang berbeda di database penampung.
+</Callout>
+
+* **Solusi Rekayasa:**
+  Menerapkan mekanisme **Idempotency Key** pada setiap payload integrasi. Kunci idempotensi dibentuk dari hash unik `hash(nik + tanggal_pemeriksaan + jenis_pengukuran)`.
+  Pada layer PostgreSQL, query penyimpanan menggunakan mekanisme conditional upsert:
+  ```sql
+  INSERT INTO clinical_observations (idempotency_key, patient_id, loinc_code, value_numeric, recorded_at)
+  VALUES ($1, $2, $3, $4, $5)
+  ON CONFLICT (idempotency_key) DO UPDATE
+  SET value_numeric = EXCLUDED.value_numeric,
+      updated_at = NOW();
+  ```
+  Dengan pendekatan ini, transmisi ulang paket data yang sama tidak akan pernah menduplikasi rekam medis klinis.
+
+---
+
+## 4. Keputusan Rekayasa (Engineering Decisions)
+
+1. **Mengapa Menggunakan Gateway Terpisah, Bukan Menempel di Monolith?**  
+   Standar FHIR memiliki ribuan baris aturan validasi schema. Memisahkan *Interoperability Gateway* sebagai microservice independen memastikan bahwa perubahan format payload SATUSEHAT tidak akan mengganggu stabilitas operasional sistem input kasir atau pendaftaran klinik.
+2. **Mengapa Validasi Skema di Layer Aplikasi Sebelum Mengirim ke Pemerintah?**  
+   Sandbox SATUSEHAT memiliki rate limit request per menit. Melakukan validasi schema lokal menggunakan JSON Schema validator menghemat kuota request API dan mendeteksi field wajib yang hilang sebelum paket dikirim ke jaringan luar.
+
+---
+
+## 5. Hasil & Pembelajaran
+
+* **Uji Sukses:** Berhasil melakukan pemetaan dan pengiriman spesifikasi `Patient` dan `Observation` antropometri ke server FHIR dengan *HTTP 201 Created*.
+* **Pembelajaran:** Interoperabilitas kesehatan bukan hanya soal "bisa tembak API", melainkan pemahaman mendalam tentang terminologi standar (LOINC, SNOMED-CT, ICD-10) dan jaminan keandalan data (*data integrity*) agar riwayat medis pasien tidak pernah rusak.

@@ -11,10 +11,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Work", href: "/work" },
-  { label: "Notes", href: "/notes" },
-  { label: "About", href: "/about" },
+  { label: "Beranda", href: "/" },
+  { label: "Karya", href: "/work" },
+  { label: "Catatan", href: "/notes" },
+  { label: "Tentang", href: "/about" },
   { label: "Resume", href: "/resume" },
 ];
 
@@ -35,10 +35,10 @@ export function Navbar() {
 
           <span
             className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2 py-0.5 text-[11px] font-mono text-zinc-500 bg-zinc-100/80 rounded-full border border-zinc-200/60"
-            title="Current engineering focus"
+            title="Fokus eksplorasi rekayasa"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse-subtle"></span>
-            healthcare & systems
+            healthcare & sistem
           </span>
         </div>
 
@@ -76,7 +76,7 @@ export function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 hover:text-zinc-900 transition-colors"
-              aria-label="GitHub Profile"
+              aria-label="Profil GitHub"
             >
               <Github size={16} />
             </a>
@@ -85,7 +85,7 @@ export function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 hover:text-zinc-900 transition-colors"
-              aria-label="LinkedIn Profile"
+              aria-label="Profil LinkedIn"
             >
               <Linkedin size={16} />
             </a>

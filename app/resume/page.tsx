@@ -14,92 +14,93 @@ import {
 import { experiences } from "@/data/experience";
 
 export const metadata: Metadata = {
-  title: "Resume",
+  title: "Resume & CV",
   description:
-    "Curriculum Vitae and professional track record of Andika Dwi Prasetya, Software Engineer.",
+    "Curriculum Vitae dan rekam jejak profesional Andika Dwi Prasetya, Software Engineer.",
 };
 
 const education = [
   {
     institution: "Universitas Gadjah Mada",
-    degree: "Bachelor of Applied Science in Software Engineering Technology",
-    period: "Jul 2023 — Present",
+    degree: "Sarjana Terapan (D4) Teknologi Rekayasa Perangkat Lunak",
+    period: "Jul 2023 — Sekarang",
     location: "Yogyakarta, Indonesia",
-    details: "Current GPA: 3.81 of 4.00 (5th Semester). Focused on backend architecture, systems, and healthcare informatics.",
+    details:
+      "IPK Saat Ini: 3.81 dari 4.00 (Semester 5). Berfokus pada arsitektur sistem backend, lingkungan Linux, dan informatika kesehatan.",
   },
   {
     institution: "SMA Negeri 1 Ajibarang",
-    degree: "Mathematics and Natural Sciences",
+    degree: "Matematika dan Ilmu Pengetahuan Alam (MIPA)",
     period: "Jul 2020 — Jul 2023",
-    location: "Banyumas, Central Java",
-    details: "Graduated with honors in science stream.",
+    location: "Banyumas, Jawa Tengah",
+    details: "Lulus dengan predikat memuaskan pada peminatan sains dan matematika.",
   },
 ];
 
 const selectedProjects = [
   {
-    title: "AI-Powered Telegram Chatbot for Hotel Reviews",
-    period: "Aug — Nov 2025",
-    stack: ["n8n", "Telegram API", "OpenAI / LLM API", "SQL"],
+    title: "Chatbot Telegram Berbasis AI untuk Ulasan Hotel",
+    period: "Agu — Nov 2025",
+    stack: ["n8n", "Telegram API", "API LLM / OpenAI", "SQL"],
     description:
-      "Automated hotel review workflow that processes guest inquiries, connects with internal database records, and generates contextual answers via Telegram bot.",
+      "Alur kerja otomatisasi ulasan hotel yang memproses pertanyaan tamu, menghubungkan ke database internal, dan menyajikan jawaban kontekstual via bot Telegram.",
   },
   {
-    title: "NutriTrack x HealthMap (Interoperable Nutrition Monitoring System)",
+    title: "NutriTrack x HealthMap (Sistem Pemantauan Gizi Terintegrasi)",
     period: "Jun 2025",
-    stack: ["REST API", "PostgreSQL", "FHIR Concept", "State Management"],
+    stack: ["REST API", "PostgreSQL", "Konsep FHIR", "State Management"],
     description:
-      "Engineered an interoperable data-sharing bridge connecting regional malnutrition tracking with spatial health mapping using standardized API contracts.",
+      "Merancang jembatan pertukaran data interoperabel yang menghubungkan pencatatan kasus gizi daerah dengan pemetaan spasial kesehatan melalui kontrak API terstandarisasi.",
   },
   {
-    title: "Sports Field Rental Management System",
-    period: "Dec 2024",
+    title: "Sistem Manajemen Penyewaan Lapangan Olahraga",
+    period: "Des 2024",
     stack: ["Laravel", "MySQL", "PHP", "Tailwind CSS", "Alpine JS"],
     description:
-      "Architected relational schema and booking conflict-resolution algorithms to manage multi-court venue reservations and schedule availability.",
+      "Merancang skema database relasional dan algoritma resolusi konflik booking untuk mengelola reservasi multi-lapangan dan ketersediaan jadwal secara real-time.",
   },
 ];
 
 const skills = [
   {
-    category: "Languages",
+    category: "Bahasa Pemrograman",
     items: "Python, TypeScript, JavaScript, PHP, Go, SQL, HTML, CSS",
   },
   {
-    category: "Backend & Frameworks",
+    category: "Backend & Framework",
     items: "FastAPI, Next.js, Express.js, Laravel, RESTful API Design, Node.js",
   },
   {
-    category: "AI & Databases",
-    items: "RAG Pipeline, Ollama (Local LLM), Vector Databases, PostgreSQL, MySQL",
+    category: "AI & Basis Data",
+    items: "Pipeline RAG, Ollama (LLM Lokal), Vector Database, PostgreSQL, MySQL",
   },
   {
-    category: "Tools & Infrastructure",
-    items: "Linux, Docker, Git, GitHub, Tailscale, Postman, Nginx, Caddy, OBS Studio",
+    category: "Alat & Infrastruktur",
+    items: "Linux (Ubuntu), Docker, Git, GitHub, Tailscale, Postman, Nginx, Caddy, OBS Studio",
   },
 ];
 
 const organizations = [
   {
-    role: "Media & IT Support Staff",
+    role: "Staf Media & IT Support",
     org: "Ramadhan Di Kampus (RDK) UGM 1445H",
     period: "Mar 2024",
     description:
-      "Managed live-streaming broadcasts via OBS Studio and resolved technical audio/camera latency during daily national Ramadan webinar series.",
+      "Mengelola siaran langsung via OBS Studio dan memitigasi latensi teknis audio/kamera selama siaran hybrid rangkaian webinar Ramadhan tingkat nasional.",
   },
   {
-    role: "Creative Media Staff",
+    role: "Staf Media Kreatif",
     org: "Jamaah Shalahudin UGM",
-    period: "Oct 2023 — Mar 2024",
+    period: "Okt 2023 — Mar 2024",
     description:
-      "Produced educational video assets for digital university branding and maintained media documentation archives.",
+      "Memproduksi aset video edukatif untuk publikasi digital lembaga dan memelihara arsip dokumentasi media.",
   },
   {
-    role: "Head of Media Division",
+    role: "Ketua Divisi Media",
     org: "SMANA Masuk Kampus 7.0 (Edu Fair)",
-    period: "Dec 2023",
+    period: "Des 2023",
     description:
-      "Supervised the creative publication team and coordinated marketing material across regional university admission channels.",
+      "Memimpin tim publikasi kreatif dan mengoordinasikan materi promosi di berbagai kanal komunikasi penerimaan mahasiswa baru.",
   },
 ];
 
@@ -121,7 +122,7 @@ export default function ResumePage() {
 
           <div className="flex flex-wrap items-center gap-y-1 gap-x-4 pt-1 text-xs text-zinc-500">
             <span className="flex items-center gap-1">
-              <MapPin size={13} className="text-zinc-400" /> Sleman, Yogyakarta
+              <MapPin size={13} className="text-zinc-400" /> Sleman, D.I. Yogyakarta
             </span>
             <span className="flex items-center gap-1">
               <Phone size={13} className="text-zinc-400" /> +62 895-3849-86610
@@ -145,7 +146,7 @@ export default function ResumePage() {
             className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg shadow-sm transition-colors"
           >
             <ArrowDownToLine size={15} />
-            Download PDF Resume
+            Unduh Resume PDF
           </a>
         </div>
       </div>
@@ -153,14 +154,15 @@ export default function ResumePage() {
       {/* 2. Executive Summary */}
       <section className="space-y-3">
         <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-          Executive Summary
+          Ringkasan Eksekutif
         </h2>
         <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed max-w-3xl">
-          Software Engineering Technology student at Universitas Gadjah Mada (GPA 3.81/4.00)
-          with production internship experience building scalable web applications, local
-          Retrieval-Augmented Generation (RAG) pipelines, and multi-tenant architectures.
-          Passionate about backend systems engineering, Linux environments, and developing
-          interoperable healthcare data systems aligned with HL7 FHIR and SATUSEHAT standards.
+          Mahasiswa Teknologi Rekayasa Perangkat Lunak di Universitas Gadjah Mada (IPK 3.81/4.00)
+          dengan pengalaman magang produksi membangun aplikasi web terukur, pipeline
+          Retrieval-Augmented Generation (RAG) lokal, dan arsitektur multi-tenant.
+          Memiliki ketertarikan tinggi pada rekayasa sistem backend, administrasi server
+          Linux, serta pengembangan sistem pertukaran data kesehatan yang interoperabel
+          sesuai standar HL7 FHIR dan ekosistem SATUSEHAT.
         </p>
       </section>
 
@@ -169,7 +171,7 @@ export default function ResumePage() {
         <div className="flex items-center gap-2">
           <Briefcase size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-            Professional Experience
+            Pengalaman Profesional
           </h2>
         </div>
 
@@ -205,7 +207,7 @@ export default function ResumePage() {
               {exp.keyContributions.length > 0 && (
                 <div className="p-3 rounded-lg bg-zinc-100/80 border border-zinc-200/60 space-y-1 text-xs">
                   <div className="font-semibold text-zinc-800 text-[11px] font-mono">
-                    Key Achievements:
+                    Pencapaian Utama:
                   </div>
                   <ul className="space-y-1 text-zinc-600 pl-3 list-disc marker:text-zinc-400">
                     {exp.keyContributions.map((contrib, idx) => (
@@ -236,7 +238,7 @@ export default function ResumePage() {
         <div className="flex items-center gap-2">
           <GraduationCap size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-            Education
+            Riwayat Pendidikan
           </h2>
         </div>
 
@@ -265,7 +267,7 @@ export default function ResumePage() {
         <div className="flex items-center gap-2">
           <FolderGit2 size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-            Selected Projects
+            Proyek Pilihan
           </h2>
         </div>
 
@@ -301,7 +303,7 @@ export default function ResumePage() {
         <div className="flex items-center gap-2">
           <Wrench size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-            Technical Skills
+            Keahlian Teknis
           </h2>
         </div>
 
@@ -322,7 +324,7 @@ export default function ResumePage() {
         <div className="flex items-center gap-2">
           <Users size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
-            Leadership & Campus Involvement
+            Aktivitas & Kepemimpinan Kampus
           </h2>
         </div>
 
@@ -348,7 +350,7 @@ export default function ResumePage() {
       {/* Bottom CTA */}
       <div className="p-6 rounded-2xl border border-zinc-200 bg-zinc-100/60 flex items-center justify-between gap-4">
         <div className="text-xs text-zinc-600">
-          Looking for a full copy for your hiring records?
+          Membutuhkan salinan lengkap untuk arsip rekrutmen perusahaan Anda?
         </div>
         <a
           href="/cv.pdf"
@@ -356,7 +358,7 @@ export default function ResumePage() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shrink-0"
         >
-          Download PDF CV <ArrowUpRight size={13} />
+          Unduh PDF CV <ArrowUpRight size={13} />
         </a>
       </div>
     </div>

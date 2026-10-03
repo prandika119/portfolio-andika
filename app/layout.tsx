@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | Andika Dwi Prasetya",
   },
   description:
-    "Personal engineering website and technical notebook of Andika Dwi Prasetya. Exploring healthcare interoperability (HL7 FHIR / SATUSEHAT), AI/RAG systems, and backend engineering.",
+    "Website pribadi dan catatan rekayasa teknis Andika Dwi Prasetya. Fokus pada interoperabilitas teknologi kesehatan (HL7 FHIR / SATUSEHAT), sistem AI/RAG, dan rekayasa backend.",
 };
 
 export default function RootLayout({
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="id" className="scroll-smooth">
       <body
         className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} min-h-screen flex flex-col bg-[#fafafa] text-zinc-900 antialiased`}
       >
