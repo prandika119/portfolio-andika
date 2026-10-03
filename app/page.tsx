@@ -1,283 +1,335 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import Link from "next/link";
 import {
+  ArrowRight,
   ArrowUpRight,
-  BriefcaseBusiness,
-  ChevronDown,
-  Menu,
-  MessageCircle,
-  MoveUpRight,
+  BookOpen,
+  Cpu,
+  FileText,
+  FolderGit2,
+  Mail,
+  Network,
   Sparkles,
-  X,
 } from "lucide-react";
-import { ProjectCard } from "./components/ProjectCard";
-import { SocialLinks } from "./components/SocialLinks";
-import { projects } from "./data/projects";
+import { getAllNotes, getAllProjects } from "@/lib/content";
+import { experiences } from "@/data/experience";
 
-const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Contact", href: "#contact" },
-];
-
-const experience = [
-  {
-    date: "Feb — Jun 2026",
-    company: "PT Parama Data Unit",
-    role: "Full Stack Developer & AI Engineer Intern",
-    description:
-      "Developed an AI-powered document management system based on Retrieval-Augmented Generation (RAG) to support intelligent and automated document querying, while building a responsive Next.js interface and FastAPI-powered backend pipeline with Ollama integration.",
-  },
-  {
-    date: "Oct — Nov 2025",
-    company: "PT Jaya Perkasa Mandalika",
-    role: "Web Developer Intern",
-    description:
-      "Handled a multi-tenant SaaS platform using Laravel, supported centralized data management for multiple clients, and worked with the team to resolve frontend-backend integration issues and dynamic rendering problems through GitHub-based collaboration.",
-  },
-  {
-    date: "Jul 2022 — Dec 2023",
-    company: "Digital Hero Indonesia",
-    role: "Web Developer Intern",
-    description:
-      "Built a rental management web system using Laravel and contributed to Agile Scrum delivery, including sprint planning, daily standups, source control, and project coordination with Git and GitHub.",
-  },
-];
-
-const skillGroups = [
-  { label: "Languages", items: ["PHP", "Python", "Golang", "JavaScript", "TypeScript"] },
-  { label: "Frontend", items: ["React", "HTML", "CSS", "Tailwind", "Bootstrap"] },
-  { label: "Backend", items: ["Laravel", "NestJS", "FastAPI", "Express", "REST API"] },
-  { label: "Tools", items: ["Git", "GitHub", "Docker", "Linux", "n8n", "Postman"] },
-];
-
-const organizationExperience = [
-  {
-    title: "Media & IT Support Staff",
-    org: "Ramadhan Di Kampus (RDK) UGM 1445H",
-    date: "Mar 2024",
-    description:
-      "Managed live streaming setup using OBS Studio and handled technical troubleshooting for camera, audio, and lighting during daily Ramadan webinar sessions.",
-  },
-  {
-    title: "Creative Media Staff",
-    org: "Jamaah Shalahudin UGM",
-    date: "Oct 2023 — Mar 2024",
-    description:
-      "Produced and edited educational video content for organizational branding, while documenting activities and preserving visual archives.",
-  },
-  {
-    title: "Head of Media Division",
-    org: "SMANA Masuk Kampus 7.0 (Edu Fair)",
-    date: "Dec 2023",
-    description:
-      "Led the media team, coordinated design and social media production, and acted as the main liaison between divisions to keep event communication aligned.",
-  },
-];
-
-export default function Portfolio() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [showTop, setShowTop] = useState(false);
-
-  useEffect(() => {
-    const revealNodes = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.14 }
-    );
-
-    revealNodes.forEach((node) => observer.observe(node));
-
-    const handleScroll = () => setShowTop(window.scrollY > 520);
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 820) {
-        setMenuOpen(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+export default function HomePage() {
+  const notes = getAllNotes().slice(0, 3);
+  const projects = getAllProjects().slice(0, 3);
+  const recentExperience = experiences.slice(0, 2);
 
   return (
-    <main className="page-shell">
-      <nav className="nav-shell">
-        <a className="brand" href="#top" onClick={() => setMenuOpen(false)}>
-          ADP<span>.</span>
-        </a>
-
-        <button
-          className="menu-toggle"
-          aria-label="Toggle navigation menu"
-          onClick={() => setMenuOpen((prev) => !prev)}
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-
-        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
-              {item.label}
-            </a>
-          ))}
-          <a className="nav-cta" href="mailto:andika.dwiprasetya119@gmail.com" onClick={() => setMenuOpen(false)}>
-            Let&apos;s talk <ArrowUpRight size={15} />
-          </a>
-        </div>
-      </nav>
-
-      <header className="hero section-wrap" id="top">
-        <div className="hero-copy reveal">
-          <p className="eyebrow">
-            <span className="status-dot" /> Available for collaboration
-          </p>
-          <h1>
-            Building digital <em>experiences</em> with purpose.
-          </h1>
-          <p className="hero-intro">
-            I&apos;m Andika Dwi Prasetya, a Software Engineering Technology student passionate about building reliable web products,
-            efficient backend systems, and user-focused experiences from idea to implementation.
-          </p>
-
-          <div className="hero-actions">
-            <a className="button button-primary" href="#portfolio">
-              Explore my work <ArrowUpRight size={17} />
-            </a>
-            <a className="text-link" href="mailto:andika.dwiprasetya119@gmail.com">
-              Get in touch <MoveUpRight size={16} />
-            </a>
-          </div>
-          <SocialLinks />
+    <div className="space-y-20 py-4">
+      {/* 1. Hero Section */}
+      <section className="space-y-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono text-zinc-600 bg-zinc-100 rounded-full border border-zinc-200">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-subtle"></span>
+          <span>Available for engineering roles & collaboration</span>
         </div>
 
-        <div className="hero-visual reveal delay-2">
-          <div className="hero-image-frame rounded-3xl">
-            <Image src="/my_photo/foto%20ku.jpg" alt="Andika Dwi Prasetya portrait" fill sizes="(max-width: 820px) 100vw, 470px" priority />
-            <div className="image-caption">01 / Profile study</div>
-          </div>
-          <div className="hero-stamp">
-            <Sparkles size={18} />
-            <span>
-              CURIOUS
-              <br />
-              BY DEFAULT
-            </span>
-          </div>
+        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.15]">
+          Software Engineer exploring{" "}
+          <span className="text-zinc-500 font-normal">
+            healthcare interoperability, AI systems, and infrastructure.
+          </span>
+        </h1>
+
+        <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-2xl">
+          I&apos;m Andika Dwi Prasetya, a Software Engineering Technology student at
+          Universitas Gadjah Mada. I document what I build, what I break, and what
+          I learn—from HL7 FHIR and SATUSEHAT APIs to local RAG pipelines and home
+          server infrastructure.
+        </p>
+
+        {/* Action CTAs */}
+        <div className="flex flex-wrap items-center gap-3 pt-2">
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shadow-sm"
+          >
+            <FolderGit2 size={16} />
+            Explore Work
+          </Link>
+          <Link
+            href="/notes"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 hover:text-zinc-900 rounded-lg border border-zinc-200 transition-colors"
+          >
+            <BookOpen size={16} />
+            Read Notes
+          </Link>
+          <Link
+            href="/resume"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 hover:text-zinc-900 rounded-lg border border-zinc-200 transition-colors"
+          >
+            <FileText size={16} />
+            Resume
+          </Link>
         </div>
-      </header>
+      </section>
 
-      <div className="marquee-band" aria-label="Key expertise">
-        <div>
-          FULL STACK DEVELOPMENT <span>✦</span> AI ENGINEERING <span>✦</span> BACKEND SYSTEMS <span>✦</span> CREATIVE MEDIA
-          <span>✦</span>
-        </div>
-      </div>
-
-      <section className="content-section section-wrap" id="about">
-        <div className="section-label reveal">
-          <span>01</span>
-          <span>About me</span>
+      {/* 2. Current Focus Grid */}
+      <section className="space-y-4">
+        <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
+          Current Focus & Exploration
         </div>
 
-        <div className="about-grid">
-          <div className="about-heading reveal">
-            <h2>
-              Good software <em>starts with</em> sharp thinking.
-            </h2>
-          </div>
-
-          <div className="about-copy reveal delay-1">
-            <p>
-              My interest in software began with understanding how digital systems work behind the scenes and how thoughtful design can
-              solve practical problems. That curiosity has grown into a focus on web development, backend engineering, and AI-assisted
-              product building.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Healthcare */}
+          <div className="p-5 rounded-xl border border-zinc-200 bg-white shadow-xs space-y-3">
+            <div className="flex items-center gap-2.5 text-zinc-900 font-semibold text-sm">
+              <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+                <Network size={16} />
+              </div>
+              Healthcare IT
+            </div>
+            <p className="text-xs text-zinc-600 leading-relaxed">
+              HL7 FHIR standards, SATUSEHAT sandbox integrations, clinical data
+              pipelines, and healthcare interoperability.
             </p>
-            <p>
-              As a Software Engineering Technology student at Universitas Gadjah Mada, I enjoy working across the stack: designing data
-              flows, building APIs, developing interfaces, and collaborating with teams to turn ideas into dependable products.
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {["HL7 FHIR", "SATUSEHAT", "REST API", "PostgreSQL"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 text-[11px] font-mono text-zinc-600 bg-zinc-50 rounded border border-zinc-200/80"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* AI / RAG */}
+          <div className="p-5 rounded-xl border border-zinc-200 bg-white shadow-xs space-y-3">
+            <div className="flex items-center gap-2.5 text-zinc-900 font-semibold text-sm">
+              <div className="p-2 rounded-lg bg-blue-50 text-blue-700 border border-blue-200/60">
+                <Sparkles size={16} />
+              </div>
+              AI & RAG Systems
+            </div>
+            <p className="text-xs text-zinc-600 leading-relaxed">
+              Retrieval-Augmented Generation, local LLM orchestration via Ollama,
+              FastAPI pipelines, and retrieval evaluation.
             </p>
-            <div className="signature">
-              ADP<span>—</span>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {["RAG", "FastAPI", "Ollama", "Vector DB"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 text-[11px] font-mono text-zinc-600 bg-zinc-50 rounded border border-zinc-200/80"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Systems & Linux */}
+          <div className="p-5 rounded-xl border border-zinc-200 bg-white shadow-xs space-y-3">
+            <div className="flex items-center gap-2.5 text-zinc-900 font-semibold text-sm">
+              <div className="p-2 rounded-lg bg-purple-50 text-purple-700 border border-purple-200/60">
+                <Cpu size={16} />
+              </div>
+              Systems & Infra
+            </div>
+            <p className="text-xs text-zinc-600 leading-relaxed">
+              Linux administration, Docker containerization, home lab self-hosting,
+              reverse proxies, and networking.
+            </p>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {["Linux", "Docker", "Tailscale", "HomeLab"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 text-[11px] font-mono text-zinc-600 bg-zinc-50 rounded border border-zinc-200/80"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="content-section section-wrap" id="experience">
-        <div className="section-label reveal">
-          <span>02</span>
-          <span>Experience</span>
+      {/* 3. Featured Engineering Projects */}
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold tracking-tight text-zinc-900">
+              Featured Work
+            </h2>
+            <p className="text-xs text-zinc-500 mt-1">
+              Flagship engineering implementations and case studies.
+            </p>
+          </div>
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-1 text-xs font-mono text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            All projects <ArrowRight size={13} />
+          </Link>
         </div>
 
-        <div className="experience-list">
-          {experience.map((item, index) => (
-            <article className="experience-item reveal" style={{ transitionDelay: `${index * 0.12}s` }} key={item.company}>
-              <div className="experience-date">{item.date}</div>
-              <div className="experience-copy">
-                <p className="company-name">{item.company}</p>
-                <h3>{item.role}</h3>
-                <p className="muted-copy">{item.description}</p>
+        <div className="grid grid-cols-1 gap-4">
+          {projects.map((project) => (
+            <article
+              key={project.slug}
+              className="group p-5 sm:p-6 rounded-xl border border-zinc-200 bg-white hover:border-zinc-300 hover:shadow-sm transition-all"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                <div className="space-y-2 max-w-xl">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider font-semibold text-zinc-700 bg-zinc-100 rounded border border-zinc-200">
+                      {project.frontmatter.status}
+                    </span>
+                    <span className="text-xs font-mono text-zinc-400">
+                      {project.frontmatter.role}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base sm:text-lg font-bold text-zinc-900 group-hover:text-zinc-600 transition-colors">
+                    <Link href={`/projects/${project.slug}`}>
+                      {project.frontmatter.title}
+                    </Link>
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                    {project.frontmatter.tagline}
+                  </p>
+
+                  {/* Tech stack pills */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {project.frontmatter.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-0.5 text-[11px] font-mono text-zinc-600 bg-zinc-50 rounded border border-zinc-200/60"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="sm:shrink-0 pt-2 sm:pt-0">
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="inline-flex items-center gap-1 text-xs font-medium text-zinc-900 group-hover:translate-x-0.5 transition-transform"
+                  >
+                    View case study <ArrowUpRight size={14} />
+                  </Link>
+                </div>
               </div>
-              <ArrowUpRight className="item-arrow" size={19} />
             </article>
           ))}
         </div>
       </section>
 
-      <section className="portfolio-section" id="portfolio">
-        <div className="section-wrap">
-          <div className="section-label reveal">
-            <span>03</span>
-            <span>Portfolio</span>
-          </div>
-
-          <div className="projects-intro reveal">
-            <h2>
-              A few things <em>I&apos;ve built.</em>
+      {/* 4. Latest Technical Notes */}
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold tracking-tight text-zinc-900">
+              Latest Notes
             </h2>
-            <p>Solutions shaped by usability, maintainability, and a strong sense of product purpose.</p>
+            <p className="text-xs text-zinc-500 mt-1">
+              Reflections, debugging logs, and deep-dives written from experience.
+            </p>
           </div>
+          <Link
+            href="/notes"
+            className="inline-flex items-center gap-1 text-xs font-mono text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            All notes <ArrowRight size={13} />
+          </Link>
+        </div>
 
-          <div className="project-list">
-            {projects.map((project, index) => (
-              <ProjectCard project={project} index={index} key={project.title} />
-            ))}
-          </div>
+        <div className="divide-y divide-zinc-200/80 border-y border-zinc-200/80">
+          {notes.map((note) => (
+            <article
+              key={note.slug}
+              className="py-5 group flex flex-col sm:flex-row sm:items-baseline justify-between gap-3"
+            >
+              <div className="space-y-1.5 max-w-xl">
+                <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                  <span className="uppercase text-[11px] font-semibold text-zinc-700 bg-zinc-100 px-2 py-0.5 rounded">
+                    {note.category}
+                  </span>
+                  <span>·</span>
+                  <span>{note.frontmatter.date}</span>
+                  <span>·</span>
+                  <span>{note.readingTime}</span>
+                </div>
+
+                <h3 className="text-base font-semibold text-zinc-900 group-hover:text-zinc-600 transition-colors">
+                  <Link href={`/notes/${note.category}/${note.slug}`}>
+                    {note.frontmatter.title}
+                  </Link>
+                </h3>
+
+                <p className="text-xs sm:text-sm text-zinc-600 line-clamp-2 leading-relaxed">
+                  {note.frontmatter.description}
+                </p>
+              </div>
+
+              <div className="shrink-0 text-right">
+                <Link
+                  href={`/notes/${note.category}/${note.slug}`}
+                  className="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 group-hover:text-zinc-900 transition-colors"
+                >
+                  Read note <ArrowRight size={13} />
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="content-section section-wrap" id="skills">
-        <div className="section-label reveal">
-          <span>04</span>
-          <span>Toolkit</span>
+      {/* 5. Experience Snapshot */}
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold tracking-tight text-zinc-900">
+              Professional Experience
+            </h2>
+            <p className="text-xs text-zinc-500 mt-1">
+              Roles and technical contributions in production teams.
+            </p>
+          </div>
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-1 text-xs font-mono text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            Full timeline <ArrowRight size={13} />
+          </Link>
         </div>
 
-        <div className="skills-grid">
-          {skillGroups.map((group, index) => (
-            <div className="skill-group reveal" style={{ transitionDelay: `${index * 0.08}s` }} key={group.label}>
-              <span className="skill-index">0{index + 1}</span>
-              <h3>{group.label}</h3>
-              <div>
-                {group.items.map((skill) => (
-                  <span key={skill}>{skill}</span>
+        <div className="space-y-4">
+          {recentExperience.map((exp) => (
+            <div
+              key={exp.company + exp.role}
+              className="p-5 rounded-xl border border-zinc-200 bg-white space-y-2.5"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <div>
+                  <h3 className="text-sm font-bold text-zinc-900">{exp.role}</h3>
+                  <div className="text-xs font-medium text-zinc-700">
+                    {exp.company}
+                  </div>
+                </div>
+                <div className="text-xs font-mono text-zinc-400">
+                  {exp.duration}
+                </div>
+              </div>
+
+              <p className="text-xs text-zinc-600 leading-relaxed">
+                {exp.description}
+              </p>
+
+              <div className="flex flex-wrap gap-1 pt-1">
+                {exp.technologies.slice(0, 6).map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2 py-0.5 text-[10px] font-mono text-zinc-600 bg-zinc-50 rounded border border-zinc-200/60"
+                  >
+                    {tech}
+                  </span>
                 ))}
               </div>
             </div>
@@ -285,53 +337,38 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section className="content-section section-wrap" id="community">
-        <div className="section-label reveal">
-          <span>05</span>
-          <span>Leadership</span>
-        </div>
+      {/* 6. Contact & Collaboration */}
+      <section className="p-8 rounded-2xl border border-zinc-200 bg-zinc-100/60 space-y-4 text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="space-y-1.5 max-w-lg">
+            <h2 className="text-lg sm:text-xl font-bold text-zinc-900">
+              Let&apos;s build something meaningful together.
+            </h2>
+            <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+              Open to conversations about healthcare technology, backend systems,
+              local RAG pipelines, or full-time / internship opportunities.
+            </p>
+          </div>
 
-        <div className="org-list">
-          {organizationExperience.map((item, index) => (
-            <article className="org-item reveal" style={{ transitionDelay: `${index * 0.1}s` }} key={item.title}>
-              <div className="org-meta">
-                <BriefcaseBusiness size={16} />
-                <span>{item.date}</span>
-              </div>
-              <div className="org-copy">
-                <p className="org-role">{item.title}</p>
-                <h3>{item.org}</h3>
-                <p>{item.description}</p>
-              </div>
-            </article>
-          ))}
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="mailto:andika.dwiprasetya119@gmail.com"
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shadow-xs"
+            >
+              <Mail size={14} />
+              Send Email
+            </a>
+            <a
+              href="https://linkedin.com/in/andika-dwi-prasetya-3a529b299"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium text-zinc-700 bg-white hover:bg-zinc-50 rounded-lg border border-zinc-200 transition-colors"
+            >
+              LinkedIn <ArrowUpRight size={13} />
+            </a>
+          </div>
         </div>
       </section>
-
-      <section className="contact-section section-wrap reveal" id="contact">
-        <div className="contact-kicker">
-          <MessageCircle size={17} /> Have a project in mind?
-        </div>
-        <h2>
-          Let&apos;s make something <em>worth remembering.</em>
-        </h2>
-        <a className="contact-email" href="mailto:andika.dwiprasetya119@gmail.com">
-          andika.dwiprasetya119@gmail.com <ArrowUpRight size={22} />
-        </a>
-      </section>
-
-      <footer className="footer section-wrap">
-        <span>© 2026 Andika Dwi Prasetya</span>
-        <span>Designed & built with care</span>
-        <SocialLinks compact />
-      </footer>
-
-      {showTop && (
-        <button className="back-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top">
-          <ChevronDown size={18} />
-        </button>
-      )}
-
-    </main>
+    </div>
   );
 }
