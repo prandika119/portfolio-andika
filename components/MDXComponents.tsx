@@ -122,5 +122,13 @@ export const mdxComponents = {
       </a>
     );
   },
+  pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
+    <div className="overflow-x-auto my-6 rounded-xl border border-zinc-200 bg-zinc-900 shadow-xs">
+      <pre
+        className="p-4 text-xs sm:text-sm font-mono leading-relaxed text-zinc-100 !bg-transparent !my-0 !border-0"
+        {...props}
+      />
+    </div>
+  ),
   hr: () => <hr className="my-8 border-zinc-200" />,
 };
