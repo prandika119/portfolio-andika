@@ -12,6 +12,8 @@ import {
   Wrench,
 } from "lucide-react";
 import { experiences } from "@/data/experience";
+import { TechIcon } from "@/components/TechIcon";
+import { OrgLogo } from "@/components/OrgLogo";
 
 export const metadata: Metadata = {
   title: "Resume & CV",
@@ -26,7 +28,7 @@ const education = [
     period: "Jul 2023 — Sekarang",
     location: "Yogyakarta, Indonesia",
     details:
-      "IPK Saat Ini: 3.81 dari 4.00 (Semester 5). Berfokus pada arsitektur sistem backend, lingkungan Linux, dan informatika kesehatan.",
+      "Berfokus pada arsitektur sistem backend, lingkungan Linux, dan informatika kesehatan.",
   },
   {
     institution: "SMA Negeri 1 Ajibarang",
@@ -64,19 +66,19 @@ const selectedProjects = [
 const skills = [
   {
     category: "Bahasa Pemrograman",
-    items: "Python, TypeScript, JavaScript, PHP, Go, SQL, HTML, CSS",
+    items: ["Python", "TypeScript", "JavaScript", "PHP", "Go", "SQL"],
   },
   {
     category: "Backend & Framework",
-    items: "FastAPI, Next.js, Express.js, Laravel, RESTful API Design, Node.js",
+    items: ["FastAPI", "Next.js", "Express.js", "Laravel", "REST API", "Node.js"],
   },
   {
     category: "AI & Basis Data",
-    items: "Pipeline RAG, Ollama (LLM Lokal), Vector Database, PostgreSQL, MySQL",
+    items: ["RAG", "Ollama", "Vector DB", "PostgreSQL", "MySQL"],
   },
   {
     category: "Alat & Infrastruktur",
-    items: "Linux (Ubuntu), Docker, Git, GitHub, Tailscale, Postman, Nginx, Caddy, OBS Studio",
+    items: ["Linux", "Docker", "Git", "Tailscale", "Nginx", "OBS Studio"],
   },
 ];
 
@@ -106,32 +108,32 @@ const organizations = [
 
 export default function ResumePage() {
   return (
-    <div className="space-y-12 py-4">
+    <div className="space-y-14 py-4 animate-fade-in">
       {/* 1. Header & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-8 border-b border-zinc-200">
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">
             {"// Curriculum Vitae"}
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
             Andika Dwi Prasetya
           </h1>
-          <p className="text-sm text-zinc-600 font-medium">
+          <p className="text-base text-zinc-600 font-medium">
             Software Engineer · Healthcare IT & AI Systems Explorer
           </p>
 
           <div className="flex flex-wrap items-center gap-y-1 gap-x-4 pt-1 text-xs text-zinc-500">
             <span className="flex items-center gap-1">
-              <MapPin size={13} className="text-zinc-400" /> Sleman, D.I. Yogyakarta
+              <MapPin size={14} className="text-zinc-400" /> Sleman, D.I. Yogyakarta
             </span>
             <span className="flex items-center gap-1">
-              <Phone size={13} className="text-zinc-400" /> +62 895-3849-86610
+              <Phone size={14} className="text-zinc-400" /> +62 895-3849-86610
             </span>
             <a
               href="mailto:andika.dwiprasetya119@gmail.com"
               className="flex items-center gap-1 text-zinc-700 hover:text-zinc-900 transition-colors"
             >
-              <Mail size={13} className="text-zinc-400" /> andika.dwiprasetya119@gmail.com
+              <Mail size={14} className="text-zinc-400" /> andika.dwiprasetya119@gmail.com
             </a>
           </div>
         </div>
@@ -143,7 +145,7 @@ export default function ResumePage() {
             target="_blank"
             rel="noopener noreferrer"
             download="CV_Andika_Dwi_Prasetya.pdf"
-            className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg shadow-sm transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-xl shadow-sm transition-all hover-lift"
           >
             <ArrowDownToLine size={15} />
             Unduh Resume PDF
@@ -156,8 +158,8 @@ export default function ResumePage() {
         <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
           Ringkasan Eksekutif
         </h2>
-        <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed max-w-3xl">
-          Mahasiswa Teknologi Rekayasa Perangkat Lunak di Universitas Gadjah Mada (IPK 3.81/4.00)
+        <p className="text-sm sm:text-base text-zinc-700 leading-relaxed max-w-3xl">
+          Mahasiswa Teknologi Rekayasa Perangkat Lunak di Universitas Gadjah Mada
           dengan pengalaman magang produksi membangun aplikasi web terukur, pipeline
           Retrieval-Augmented Generation (RAG) lokal, dan arsitektur multi-tenant.
           Memiliki ketertarikan tinggi pada rekayasa sistem backend, administrasi server
@@ -167,7 +169,7 @@ export default function ResumePage() {
       </section>
 
       {/* 3. Professional Experience */}
-      <section className="space-y-6 pt-4 border-t border-zinc-200">
+      <section className="space-y-6 pt-6 border-t border-zinc-200">
         <div className="flex items-center gap-2">
           <Briefcase size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
@@ -175,27 +177,30 @@ export default function ResumePage() {
           </h2>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-10">
           {experiences.map((exp) => (
-            <article key={exp.company + exp.role} className="space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                <div>
-                  <h3 className="text-sm font-bold text-zinc-900">{exp.role}</h3>
-                  <div className="text-xs font-medium text-zinc-700">
-                    {exp.company} · <span className="text-zinc-500 font-normal">{exp.location}</span>
+            <article key={exp.company + exp.role} className="space-y-3.5">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                <div className="flex items-start gap-3">
+                  <OrgLogo name={exp.company} size={38} />
+                  <div>
+                    <h3 className="text-base font-bold text-zinc-900">{exp.role}</h3>
+                    <div className="text-sm font-medium text-zinc-700">
+                      {exp.company} · <span className="text-zinc-400 font-normal">{exp.location}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="text-xs font-mono text-zinc-400 shrink-0">
+                <div className="text-xs font-mono text-zinc-400 shrink-0 sm:pt-1">
                   {exp.duration}
                 </div>
               </div>
 
-              <p className="text-xs text-zinc-600 leading-relaxed">
+              <p className="text-sm text-zinc-600 leading-relaxed pl-12">
                 {exp.description}
               </p>
 
               {/* Responsibilities list */}
-              <ul className="space-y-1.5 text-xs text-zinc-700 pl-4 list-disc marker:text-zinc-400">
+              <ul className="space-y-1.5 text-sm text-zinc-700 pl-16 list-disc marker:text-zinc-400">
                 {exp.responsibilities.map((resp, idx) => (
                   <li key={idx} className="leading-relaxed">
                     {resp}
@@ -205,11 +210,11 @@ export default function ResumePage() {
 
               {/* Key Contributions */}
               {exp.keyContributions.length > 0 && (
-                <div className="p-3 rounded-lg bg-zinc-100/80 border border-zinc-200/60 space-y-1 text-xs">
-                  <div className="font-semibold text-zinc-800 text-[11px] font-mono">
+                <div className="ml-12 p-3.5 rounded-xl bg-zinc-50 border border-zinc-200/70 space-y-1.5 text-sm">
+                  <div className="font-semibold text-zinc-800 text-xs font-mono">
                     Pencapaian Utama:
                   </div>
-                  <ul className="space-y-1 text-zinc-600 pl-3 list-disc marker:text-zinc-400">
+                  <ul className="space-y-1 text-zinc-600 pl-4 list-disc marker:text-zinc-400">
                     {exp.keyContributions.map((contrib, idx) => (
                       <li key={idx}>{contrib}</li>
                     ))}
@@ -217,15 +222,10 @@ export default function ResumePage() {
                 </div>
               )}
 
-              {/* Tech stack */}
-              <div className="flex flex-wrap gap-1 pt-1">
+              {/* Tech stack with brand icons */}
+              <div className="flex flex-wrap gap-1.5 pt-1 ml-12">
                 {exp.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2 py-0.5 text-[10px] font-mono text-zinc-600 bg-zinc-50 rounded border border-zinc-200/80"
-                  >
-                    {tech}
-                  </span>
+                  <TechIcon key={tech} name={tech} size={13} showLabel />
                 ))}
               </div>
             </article>
@@ -234,7 +234,7 @@ export default function ResumePage() {
       </section>
 
       {/* 4. Education */}
-      <section className="space-y-4 pt-4 border-t border-zinc-200">
+      <section className="space-y-5 pt-6 border-t border-zinc-200">
         <div className="flex items-center gap-2">
           <GraduationCap size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
@@ -242,19 +242,22 @@ export default function ResumePage() {
           </h2>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {education.map((edu) => (
-            <div key={edu.institution} className="space-y-1">
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                <div>
-                  <h3 className="text-sm font-bold text-zinc-900">{edu.institution}</h3>
-                  <div className="text-xs text-zinc-700">{edu.degree}</div>
+            <div key={edu.institution} className="space-y-1.5">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                <div className="flex items-start gap-3">
+                  <OrgLogo name={edu.institution} size={36} />
+                  <div>
+                    <h3 className="text-base font-bold text-zinc-900">{edu.institution}</h3>
+                    <div className="text-sm text-zinc-700">{edu.degree}</div>
+                  </div>
                 </div>
-                <div className="text-xs font-mono text-zinc-400 shrink-0">
+                <div className="text-xs font-mono text-zinc-400 shrink-0 sm:pt-1">
                   {edu.period}
                 </div>
               </div>
-              <p className="text-xs text-zinc-600 leading-relaxed">
+              <p className="text-sm text-zinc-600 leading-relaxed pl-12">
                 {edu.details}
               </p>
             </div>
@@ -263,7 +266,7 @@ export default function ResumePage() {
       </section>
 
       {/* 5. Selected Projects */}
-      <section className="space-y-4 pt-4 border-t border-zinc-200">
+      <section className="space-y-5 pt-6 border-t border-zinc-200">
         <div className="flex items-center gap-2">
           <FolderGit2 size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
@@ -271,26 +274,21 @@ export default function ResumePage() {
           </h2>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {selectedProjects.map((proj) => (
-            <div key={proj.title} className="space-y-1.5">
+            <div key={proj.title} className="p-5 rounded-2xl border border-zinc-200 bg-white hover-lift space-y-2">
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                <h3 className="text-sm font-bold text-zinc-900">{proj.title}</h3>
+                <h3 className="text-base font-bold text-zinc-900">{proj.title}</h3>
                 <div className="text-xs font-mono text-zinc-400 shrink-0">
                   {proj.period}
                 </div>
               </div>
-              <p className="text-xs text-zinc-600 leading-relaxed">
+              <p className="text-sm text-zinc-600 leading-relaxed">
                 {proj.description}
               </p>
-              <div className="flex flex-wrap gap-1 pt-1">
+              <div className="flex flex-wrap gap-1.5 pt-1">
                 {proj.stack.map((t) => (
-                  <span
-                    key={t}
-                    className="px-2 py-0.5 text-[10px] font-mono text-zinc-600 bg-zinc-50 rounded border border-zinc-200/80"
-                  >
-                    {t}
-                  </span>
+                  <TechIcon key={t} name={t} size={13} showLabel />
                 ))}
               </div>
             </div>
@@ -299,7 +297,7 @@ export default function ResumePage() {
       </section>
 
       {/* 6. Technical Skills */}
-      <section className="space-y-4 pt-4 border-t border-zinc-200">
+      <section className="space-y-5 pt-6 border-t border-zinc-200">
         <div className="flex items-center gap-2">
           <Wrench size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
@@ -307,12 +305,14 @@ export default function ResumePage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {skills.map((s) => (
-            <div key={s.category} className="p-3.5 rounded-xl border border-zinc-200 bg-white space-y-1">
-              <div className="text-xs font-bold text-zinc-900">{s.category}</div>
-              <div className="text-xs font-mono text-zinc-600 leading-relaxed">
-                {s.items}
+            <div key={s.category} className="p-5 rounded-2xl border border-zinc-200 bg-white hover-lift space-y-2.5">
+              <div className="text-sm font-bold text-zinc-900">{s.category}</div>
+              <div className="flex flex-wrap gap-1.5">
+                {s.items.map((item) => (
+                  <TechIcon key={item} name={item} size={14} showLabel />
+                ))}
               </div>
             </div>
           ))}
@@ -320,7 +320,7 @@ export default function ResumePage() {
       </section>
 
       {/* 7. Organizational & Leadership */}
-      <section className="space-y-4 pt-4 border-t border-zinc-200">
+      <section className="space-y-5 pt-6 border-t border-zinc-200">
         <div className="flex items-center gap-2">
           <Users size={16} className="text-zinc-400" />
           <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
@@ -328,18 +328,18 @@ export default function ResumePage() {
           </h2>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {organizations.map((org) => (
-            <div key={org.role + org.org} className="space-y-0.5">
+            <div key={org.role + org.org} className="p-4 rounded-xl border border-zinc-200/80 bg-white space-y-1">
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                <div className="text-xs font-bold text-zinc-900">
+                <div className="text-sm font-bold text-zinc-900">
                   {org.role} · <span className="font-normal text-zinc-600">{org.org}</span>
                 </div>
                 <div className="text-xs font-mono text-zinc-400 shrink-0">
                   {org.period}
                 </div>
               </div>
-              <p className="text-xs text-zinc-600 leading-relaxed">
+              <p className="text-sm text-zinc-600 leading-relaxed">
                 {org.description}
               </p>
             </div>
@@ -348,15 +348,15 @@ export default function ResumePage() {
       </section>
 
       {/* Bottom CTA */}
-      <div className="p-6 rounded-2xl border border-zinc-200 bg-zinc-100/60 flex items-center justify-between gap-4">
-        <div className="text-xs text-zinc-600">
+      <div className="p-7 rounded-3xl border border-zinc-200 bg-gradient-to-br from-zinc-50 to-zinc-100/70 flex items-center justify-between gap-4 shadow-2xs">
+        <div className="text-sm text-zinc-600">
           Membutuhkan salinan lengkap untuk arsip rekrutmen perusahaan Anda?
         </div>
         <a
           href="/cv.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shrink-0"
+          className="inline-flex items-center gap-1.5 px-4.5 py-2.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-xl transition-all hover-lift shrink-0"
         >
           Unduh PDF CV <ArrowUpRight size={13} />
         </a>

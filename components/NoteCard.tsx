@@ -21,7 +21,7 @@ export function NoteCard({ note }: NoteCardProps) {
     categoryStyles[note.category] || categoryStyles.general;
 
   return (
-    <article className="group p-5 sm:p-6 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-300 hover:shadow-xs transition-all space-y-3">
+    <article className="group hover-lift p-5 sm:p-6 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-300 transition-all space-y-3">
       {/* Topline Metadata */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="flex items-center gap-2">
@@ -49,7 +49,7 @@ export function NoteCard({ note }: NoteCardProps) {
           </Link>
         </h3>
 
-        <p className="text-xs sm:text-sm text-zinc-600 line-clamp-2 leading-relaxed">
+        <p className="text-sm text-zinc-600 line-clamp-2 leading-relaxed">
           {note.frontmatter.description}
         </p>
       </div>

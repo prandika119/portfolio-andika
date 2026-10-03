@@ -22,7 +22,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-zinc-200/80 transition-colors">
+    <header className="sticky top-0 z-40 w-full bg-white sm:bg-white/90 backdrop-blur-md border-b border-zinc-200 transition-colors">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
         {/* Brand & Status */}
         <div className="flex items-center gap-2">
@@ -33,13 +33,7 @@ export function Navbar() {
             Andika Dwi Prasetya
           </Link>
 
-          <span
-            className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2 py-0.5 text-[11px] font-mono text-zinc-500 bg-zinc-100/80 rounded-full border border-zinc-200/60"
-            title="Fokus eksplorasi rekayasa"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse-subtle"></span>
-            healthcare & sistem
-          </span>
+          
         </div>
 
         {/* Desktop Navigation */}
